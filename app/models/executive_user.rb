@@ -1,0 +1,2 @@
+class ExecutiveUser < User
+end
