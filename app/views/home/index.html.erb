@@ -1,2 +1,41 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<div class="container col-xxl-8 px-4 py-5">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+        <div class="col-10 col-sm-8 col-lg-6">
+            <%= image_tag("edu-events-home.png", height: "400px", class: "d-block mx-lg-auto img-fluid", loading: "lazy") %>
+        </div>
+        <div class="col-lg-6">
+            <h1 class="display-5 fw-bold lh-1 mb-3">Finally, a smart educational events system.</h1>
+            <p class="lead">Providing a smart centralized platform to manage and attend educational events.</p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                <%= link_to "Learn More", about_path, class: "btn btn-primary btn-lg px-4 me-md-2"%>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bg-orange text-secondary px-4 py-5 text-center">
+    <div class="py-5">
+        <h1 class="display-5 fw-bold text-white">Why choose us?</h1>
+        <div class="col-lg-6 mx-auto">
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <div class="cards">
+                    <div class="card">
+                        <i class="fa-solid fa-globe fa-3x"></i>
+                        <h2>Seamless Networking</h2>
+                        <p>Foster meaningful connections with direct messaging, interactive Q&A sections, and dedicated discussion forums to keep conversations going before, during, and after events.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fa-solid fa-bolt fa-3x"></i>
+                        <h2>Automated Event Management</h2>
+                        <p>Streamline event planning with real-time venue scheduling, automatic confirmations for organizers and speakers, and a hassle-free booking experience.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fa-solid fa-chart-simple fa-3x"></i>
+                        <h2>Advanced Analytics</h2>
+                        <p>Gain valuable insights with attendee feedback and attendance tracking, helping speakers and organizers improve future events while rewarding participants with exclusive perks.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
