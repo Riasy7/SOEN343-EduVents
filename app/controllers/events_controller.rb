@@ -17,7 +17,7 @@ class EventsController < ApplicationController
   def create
     @event = Event.new(event_params)
   
-    if current_user.is_a?(OrganizerUser) || current_user.is_a?(ExecutiveUser)
+    if current_user.is_a?(OrganizerUser) || current_user.is_a?(ExecutiveUser) || current_user.is_a?(AdminUser)
       @event.organizer = current_user
     else
       redirect_to events_path, alert: "Only organizers and executives can create events." and return
