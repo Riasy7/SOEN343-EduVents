@@ -1,10 +1,79 @@
-/*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
- */
+body {
+    font-family: "Montserrat", sans-serif;
+}
+
+.bg-body-tertiary {
+    background-color: white !important;
+}
+
+.bg-orange {
+    background-color: #E8923C;
+}
+
+.btn-primary {
+    background-color: #E8923C;
+    color: #fff;
+    border-color: #E8923C;
+}
+
+.btn-primary:hover {
+    background-color: #ab6b2c;
+    border-color: #ab6b2c;
+}
+
+.btn-primary:active:focus {
+    background-color: #cc7000;
+    border-color: #cc7000;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    transform: scale(0.98);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: black;
+    border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: rgba(0,0,0,0.1);
+    color: black;
+    border-color: #6c757d;
+}
+
+.cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.card {
+    background-color: white;
+    color: #E8923C;
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    width: 300px;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card i {
+    color: #E8923C;
+    margin-bottom: 10px;
+}
+
+.card h2 {
+    margin: 10px 0;
+    font-size: 1.5em;
+}
+
+.card p {
+    font-size: 1.15em;
+    opacity: 0.8;
+}
