@@ -1,2 +1,4 @@
 class OrganizerUser < User
-end
+    has_many :events, foreign_key: "organizer_id"
+  end
+  

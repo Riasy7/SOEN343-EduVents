@@ -1,0 +1,12 @@
+<h1><%= @event.name %></h1>
+
+<p><strong>Event Type:</strong> <%= @event.event_type.capitalize %></p>
+<p><strong>Location:</strong> <%= @event.location %></p>
+<p><strong>Organizer:</strong> <%= @event.organizer.username %></p>
+
+<%= link_to "Back to Events", events_path, class: "btn btn-secondary" %>
+
+<% if current_user.is_a?(OrganizerUser) || current_user.is_a?(ExecutiveUser) %>
+  <%= link_to "Edit Event", edit_event_path(@event), class: "btn btn-primary" %>
+  <%= link_to "Delete Event", @event, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+<% end %>
