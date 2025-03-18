@@ -15,11 +15,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_18_172145) do
   enable_extension "pg_catalog.plpgsql"
 
   create_table "events", force: :cascade do |t|
-    t.string "name", null: false
+    t.string "name"
     t.text "description"
-    t.string "event_type", null: false
-    t.string "location", null: false
-    t.integer "organizer_id", null: false
+    t.string "event_type"
+    t.string "location"
+    t.integer "organizer_id"
     t.datetime "published_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -42,6 +42,4 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_18_172145) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
   end
-
-  add_foreign_key "events", "users", column: "organizer_id"
 end

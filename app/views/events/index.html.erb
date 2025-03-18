@@ -7,11 +7,11 @@
     <p><strong>Location:</strong> <%= event.location %></p>
     <p><strong>Organizer:</strong> <%= event.organizer.username %></p>
 
-    <% if current_user.is_a?(OrganizerUser) || current_user.is_a?(ExecutiveUser) %>
+    <% if current_user.is_a?(OrganizerUser) || current_user.is_a?(ExecutiveUser) || current_user.is_a?(AdminUser) %>
       <%= link_to "Edit", edit_event_path(event), class: "btn btn-primary" %>
-      <%= link_to "Delete", event, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+      <%= link_to "Delete", event_path(event), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
     <% end %>
   </div>
 <% end %>
 
-<%= link_to "Create New Event", new_event_path, class: "btn btn-success" if current_user.is_a?(OrganizerUser) || current_user.is_a?(ExecutiveUser) %>
+<%= link_to "Create New Event", new_event_path, class: "btn btn-success" if current_user.is_a?(OrganizerUser) || current_user.is_a?(ExecutiveUser) || current_user.is_a?(AdminUser)%>

@@ -8,7 +8,8 @@ class EventsController < ApplicationController
   end
 
   def show
-  end
+    @event = Event.find(params[:id])
+  end  
 
   def new
     @event = Event.new
@@ -42,9 +43,14 @@ class EventsController < ApplicationController
   end
 
   def destroy
-    @event.destroy
-    redirect_to events_path, notice: "Event was successfully deleted."
+    @event = Event.find(params[:id])
+    if @event.destroy
+      redirect_to events_path, notice: "Event was successfully deleted."
+    else
+      redirect_to events_path, alert: "Error: Unable to delete event."
+    end
   end
+  
 
   private
 
