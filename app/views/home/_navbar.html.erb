@@ -6,7 +6,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link <%= "active" if current_page?("/home") || current_page?("/") %>" aria-current="page" href="<%= home_path %>">Home</a>
+                    <a class="nav-link <%= "active" if current_page?("/") %>" aria-current="page" href="<%= root_path %>">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <%= "active" if current_page?("/about") %>" aria-current="page" href="<%= about_path %>">About</a>
