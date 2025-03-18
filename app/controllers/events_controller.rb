@@ -57,7 +57,7 @@ class EventsController < ApplicationController
   end
 
   def authorize_event_manager!
-    unless current_user.is_a?(OrganizerUser) || current_user.is_a?(ExecutiveUser)
+    unless current_user.is_a?(OrganizerUser) || current_user.is_a?(ExecutiveUser) || current_user.is_a?(AdminUser)
       redirect_to events_path, alert: "You are not authorized to perform this action."
     end
   end
