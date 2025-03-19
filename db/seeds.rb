@@ -10,3 +10,4 @@ ExecutiveUser.create!(username: "executive", password: "password", email: "execu
 OrganizerUser.create!(username: "organizer", password: "password", email: "organizer@edu-events.ca", first_name: "George", last_name: "Staples")
 AttendeeUser.create!(username: "speaker", password: "password", email: "speaker@edu-events.ca", first_name: "Marc", last_name: "Williams", attendee_type: "speaker")
 AttendeeUser.create!(username: "listener", password: "password", email: "listener@edu-events.ca", first_name: "Sarah", last_name: "Hull", attendee_type: "listener")
+Organization.create!(name: "Concordia University", website: "https://www.concordia.ca", phone: "+5141234567")
