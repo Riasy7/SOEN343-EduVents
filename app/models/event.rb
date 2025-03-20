@@ -5,4 +5,6 @@ class Event < ApplicationRecord
     validates :event_type, presence: true, inclusion: { in: %w[conference workshop seminar competition other] }
     validates :location, presence: true
     validates :organizer_id, presence: true
+
+    scope :ordered_by_published_at, -> { order(published_at: :desc) }
 end
