@@ -39,3 +39,21 @@
         </div>
     </div>
 </div>
+
+<!-- EVENT FEED SECTION -->
+<div class="container my-5">
+    <h2 class="text-center">Event Feed</h2>
+    <div class="row">
+        <% @events.each do |event| %>
+            <div class="col-md-4">
+                <div class="card shadow-sm p-3 mb-4">
+                    <div class="card-body">
+                        <h3 class="card-title"><%= event.name %></h3>
+                        <p class="card-text"><%= event.description %></p>
+                        <small class="text-muted">Published at: <%= event.published_at.strftime("%B %d, %Y %I:%M %p") if event.published_at %></small>
+                    </div>
+                </div>
+            </div>
+        <% end %>
+    </div>
+</div>
