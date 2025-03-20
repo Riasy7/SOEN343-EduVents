@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_19_201135) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_20_175625) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -23,6 +23,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_19_201135) do
     t.datetime "published_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.string "name"
+    t.string "address1"
+    t.string "address2"
+    t.string "city"
+    t.string "state"
+    t.string "country"
+    t.string "postal_code"
+    t.bigint "organization_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_locations_on_organization_id"
   end
 
   create_table "organizations", force: :cascade do |t|
@@ -52,4 +66,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_19_201135) do
   end
 
   add_foreign_key "events", "users", column: "organizer_id"
+  add_foreign_key "locations", "organizations"
 end

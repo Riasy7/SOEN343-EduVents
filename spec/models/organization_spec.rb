@@ -24,11 +24,31 @@ RSpec.describe Organization, type: :model do
       expect(organization_with_invalid_phone).not_to be_valid
       expect(organization_with_invalid_phone.errors[:phone]).to include("must be a valid phone number")
     end
+
+    it "is invalid without at least one location" do
+      organization_without_locations = create(:organization)
+      organization_without_locations.locations.destroy_all
+      expect(organization_without_locations).not_to be_valid
+      expect(organization_without_locations.errors[:locations]).to include("must have at least one location")
+    end
+
+    it "is invalid with duplicate locations" do
+      organization = create(:organization)
+      location = create(:location, name: "SGW Campus", organization: organization)
+      duplicate_location = build(:location, name: "SGW Campus", organization: organization)
+      expect(duplicate_location).not_to be_valid
+      expect(duplicate_location.errors[:name]).to include("must be unique within the same organization")
+    end
   end
 
   context "associations" do
     it "has many users" do
       association = described_class.reflect_on_association(:users)
+      expect(association.macro).to eq(:has_many)
+    end
+
+    it "has many locations" do
+      association = described_class.reflect_on_association(:locations)
       expect(association.macro).to eq(:has_many)
     end
   end
