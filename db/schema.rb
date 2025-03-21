@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_20_175625) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_21_185904) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "event_registrations", force: :cascade do |t|
+    t.bigint "event_id", null: false
+    t.bigint "attendee_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["attendee_id"], name: "index_event_registrations_on_attendee_id"
+    t.index ["event_id"], name: "index_event_registrations_on_event_id"
+  end
 
   create_table "events", force: :cascade do |t|
     t.string "name", null: false
@@ -23,6 +32,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_20_175625) do
     t.datetime "published_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "price"
   end
 
   create_table "locations", force: :cascade do |t|
@@ -65,6 +75,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_20_175625) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "event_registrations", "events"
+  add_foreign_key "event_registrations", "users", column: "attendee_id"
   add_foreign_key "events", "users", column: "organizer_id"
   add_foreign_key "locations", "organizations"
 end
