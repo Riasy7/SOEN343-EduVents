@@ -12,5 +12,11 @@ Rails.application.routes.draw do
 
   get "about" => "home#about"
   root "home#index"
-  resources :events
+
+  resources :event_registration
+  resources :events do
+    member do
+      post :register, to: "event_registration#register"
+    end
+  end
 end
