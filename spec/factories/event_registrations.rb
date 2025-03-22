@@ -1,7 +1,6 @@
 FactoryBot.define do
   factory :event_registration do
-    event { nil }
-    attendee { nil }
-    registered_as { "MyString" }
+    event { create(:competition_event) }
+    attendee { create(:attendee_listener_user) }
   end
 end
