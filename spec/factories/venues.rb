@@ -1,7 +1,8 @@
 FactoryBot.define do
   factory :venue do
-    name { "MyString" }
-    max_capacity { 1 }
-    price_per_seat { 1.5 }
+    name { "H - Sir George Williams University Alumni Auditorium (H-110)" }
+    max_capacity { 692 }
+    price_per_seat { 10.0 }
+    location_id { create(:location).id }
   end
 end
