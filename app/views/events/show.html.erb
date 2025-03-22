@@ -7,7 +7,11 @@
 <%= link_to "Back to Events", events_path, class: "btn btn-secondary" %>
 
 <% if current_user.is_a?(AttendeeUser) %>
-  <%= link_to "Register", register_event_path(@event), method: :post, class: "btn btn-success" %>
+  <% if current_user.registered_for_event?(@event.id) %>
+    <%= link_to "View registration details", event_registration_path(current_user.get_registration_for_event(@event.id)), class: "btn btn-success" %>
+  <% else %>
+    <%= link_to "Register", register_event_path(@event), method: :post, class: "btn btn-success" %>
+  <% end %>
 <% end %>
 <% if current_user.is_a?(OrganizerUser) || current_user.is_a?(ExecutiveUser) || current_user.is_a?(AdminUser) %>
   <%= link_to "Edit Event", edit_event_path(@event), class: "btn btn-primary" %>
