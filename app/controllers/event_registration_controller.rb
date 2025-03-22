@@ -29,6 +29,7 @@ class EventRegistrationController < ApplicationController
     @event_registration = EventRegistration.new(attendee_id:, event_id:, role:)
 
     if @event_registration.save
+      EventRegistrationMailer.registration_confirmation(@event_registration).deliver_later
       redirect_to @event_registration, notice: "You successfully registered for #{@event_registration.event.name}."
     else
       redirect_to @event, alert: "Registration failed: #{@event_registration.errors.full_messages.to_sentence}"
