@@ -1,12 +1,12 @@
 # Delete all objects to reset the db
+EventRegistration.delete_all
 Event.delete_all
-AdminUser.delete_all
-ExecutiveUser.delete_all
-OrganizerUser.delete_all
 AttendeeUser.delete_all
+OrganizerUser.delete_all
 Location.delete_all
 Organization.delete_all
-EventRegistration.delete_all
+ExecutiveUser.delete_all
+AdminUser.delete_all
 
 # Repopulate the db
 AdminUser.create!(username: "admin", password: "password", email: "admin@edu-events.ca", first_name: "John", last_name: "Doe")
