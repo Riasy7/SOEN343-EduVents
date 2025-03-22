@@ -13,10 +13,17 @@ FactoryBot.define do
       email { "speaker@edu-events.ca" }
     end
 
-    factory :attendee_listener_user do
+    factory :attendee_listener_user, class: "AttendeeUser" do
       attendee_type { "listener" }
-      username { "listener" }
-      email { "listener@edu-events.ca" }
+      username { Faker::Internet.unique.username }
+      email { Faker::Internet.unique.email }
+      password { "password" }
+      password_confirmation { "password" }
+    end
+
+    factory :organizer do
+      username { "organizer" }
+      email { "organizer@edu-events.ca" }
     end
   end
 end

@@ -1,0 +1,14 @@
+<h1>Registration Confirmation</h1>
+
+<p>Hello <%= @attendee.first_name %>,</p>
+
+<p>You have successfully registered for the event: <strong><%= @event.name %></strong>.</p>
+
+<p>Event Details:</p>
+<ul>
+  <li>Event: <%= @event.name %></li>
+  <li>Location: <%= @event.location %></li>
+  <li>Role: <%= @event_registration.role.capitalize %></li>
+</ul>
+
+<p>Thank you for registering!</p>
