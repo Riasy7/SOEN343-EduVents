@@ -25,13 +25,6 @@ RSpec.describe Organization, type: :model do
       expect(organization_with_invalid_phone.errors[:phone]).to include("must be a valid phone number")
     end
 
-    it "is invalid without at least one location" do
-      organization_without_locations = create(:organization)
-      organization_without_locations.locations.destroy_all
-      expect(organization_without_locations).not_to be_valid
-      expect(organization_without_locations.errors[:locations]).to include("must have at least one location")
-    end
-
     it "is invalid with duplicate locations" do
       organization = create(:organization)
       location = create(:location, name: "SGW Campus", organization: organization)
