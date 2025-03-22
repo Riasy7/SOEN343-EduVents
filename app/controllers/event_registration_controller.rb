@@ -1,7 +1,12 @@
 class EventRegistrationController < ApplicationController
   before_action :authenticate_user!
   before_action :set_event_registration, only: [:destroy, :show]
-  before_action :authorize_attendee!, only: [:destroy, :register]
+
+  # callbacks used so that speakers can attend as both listeners, or speakers
+  # and so that listeners can only attend as listeners
+  before_action :authorize_attendee!, only: [:register_as_listener]
+  before_action :authorize_speaker_attendee!, only: [:register_as_speaker]
+
   before_action :check_owner!, only: [:destroy, :show]
 
   def destroy
@@ -14,21 +19,28 @@ class EventRegistrationController < ApplicationController
     end
   end
 
-  def register
-    @event = Event.find(params[:id])
-    @user = current_user
+  def register(attendee_id, event_id, role)
+    attendee = AttendeeUser.find(attendee_id)
 
-    if @user.registered_for_event?(@event.id)
+    if attendee.registered_for_event?(event_id)
       redirect_to events_path, alert: "You are already registered for this event." and return
     end
 
-    @event_registration = EventRegistration.new(attendee_id: @user.id, event_id: @event.id)
+    @event_registration = EventRegistration.new(attendee_id:, event_id:, role:)
 
     if @event_registration.save
-      redirect_to @event_registration, notice: "You successfully registered for #{@event.name}."
+      redirect_to @event_registration, notice: "You successfully registered for #{@event_registration.event.name}."
     else
       redirect_to @event, alert: "Registration failed: #{@event_registration.errors.full_messages.to_sentence}"
     end
+  end
+
+  def register_as_listener
+    register(current_user.id, params[:id], "listener")
+  end
+
+  def register_as_speaker
+    register(current_user.id, params[:id], "speaker")
   end
 
   def show
@@ -46,6 +58,12 @@ class EventRegistrationController < ApplicationController
   def authorize_attendee!
     unless current_user.is_a?(AttendeeUser)
       redirect_to events_path, alert: "Only attendees can perform this action." and return
+    end
+  end
+
+  def authorize_speaker_attendee!
+    unless current_user.is_a?(AttendeeUser) && current_user.attendee_type == "speaker"
+      redirect_to events_path, alert: "Only speaker attendees can perform this action." and return
     end
   end
 

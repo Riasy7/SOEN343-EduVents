@@ -16,7 +16,8 @@ Rails.application.routes.draw do
   resources :event_registration
   resources :events do
     member do
-      post :register, to: "event_registration#register"
+      post :register_as_listener, to: "event_registration#register_as_listener"
+      post :register_as_speaker, to: "event_registration#register_as_speaker"
     end
   end
 end

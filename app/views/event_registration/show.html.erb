@@ -2,7 +2,7 @@
 
 <p><strong>Event:</strong> <%= @event_registration.event.name.capitalize %></p>
 <p><strong>Attendee:</strong> <%= @user.first_name + " " + @user.last_name %></p>
-<p><strong>Role:</strong> <%= @user.attendee_type %></p>
+<p><strong>Role:</strong> <%= @event_registration.role %></p>
 
 <%= link_to "Back to Events", events_path, class: "btn btn-secondary" %>
 

@@ -28,4 +28,5 @@ organizer = OrganizerUser.create!(username: "organizer", password: "password", e
 speaker = AttendeeUser.create!(username: "speaker", password: "password", email: "speaker@edu-events.ca", first_name: "Marc", last_name: "Williams", attendee_type: "speaker")
 listener = AttendeeUser.create!(username: "listener", password: "password", email: "listener@edu-events.ca", first_name: "Sarah", last_name: "Hull", attendee_type: "listener")
 event = Event.create!(name: "ConUHacks IX", event_type: "competition", location: "JMSB", organizer_id: organizer.id, price:0.00)
-EventRegistration.create!(event_id: event.id, attendee_id: listener.id)
+EventRegistration.create!(event_id: event.id, attendee_id: listener.id, role: "listener")
+EventRegistration.create!(event_id: event.id, attendee_id: speaker.id, role: "speaker")
