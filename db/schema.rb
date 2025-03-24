@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_21_185904) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_24_232624) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
   create_table "event_registrations", force: :cascade do |t|
     t.bigint "event_id", null: false
     t.bigint "attendee_id", null: false
+    t.string "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["attendee_id"], name: "index_event_registrations_on_attendee_id"
@@ -27,12 +28,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_21_185904) do
     t.string "name", null: false
     t.text "description"
     t.string "event_type", null: false
-    t.string "location", null: false
     t.integer "organizer_id", null: false
     t.datetime "published_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.float "price"
+    t.bigint "venue_id", null: false
+    t.index ["venue_id"], name: "index_events_on_venue_id"
   end
 
   create_table "locations", force: :cascade do |t|
@@ -75,8 +76,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_21_185904) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  create_table "venues", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "max_capacity", null: false
+    t.decimal "price_per_seat", precision: 10, scale: 2, null: false
+    t.bigint "location_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["location_id"], name: "index_venues_on_location_id"
+  end
+
   add_foreign_key "event_registrations", "events"
   add_foreign_key "event_registrations", "users", column: "attendee_id"
   add_foreign_key "events", "users", column: "organizer_id"
+  add_foreign_key "events", "venues"
   add_foreign_key "locations", "organizations"
+  add_foreign_key "venues", "locations"
 end
