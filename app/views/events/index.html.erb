@@ -4,7 +4,7 @@
 <div class="event-card">
   <h3><%= link_to event.name, event_path(event) %></h3>
   <p><strong>Type:</strong> <%= event.event_type.capitalize %></p>
-  <p><strong>Organizer:</strong> <%= event.organizer.username %></p>
+  <p><strong>Organizer:</strong> <%= event.organizer.get_full_name %></p>
 
   <% if current_user.is_a?(OrganizerUser) || current_user.is_a?(ExecutiveUser) || current_user.is_a?(AdminUser) %>
   <%= link_to "Edit", edit_event_path(event), class: "btn btn-primary" %>
