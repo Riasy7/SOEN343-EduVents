@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   get "about" => "home#about"
   root "home#index"
 
+  get "attendee_dashboard/index", to: "attendee_dashboard#index", as: "attendee_dashboard_index"
+  get "attendee_dashboard/events", to: "attendee_dashboard#events", as: "attendee_dashboard_events"
+
   resources :event_registration
   resources :events do
     member do
