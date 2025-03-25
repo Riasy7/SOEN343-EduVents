@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
+  get "organizer_dashboard/index"
   devise_for :users
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 
   get "about" => "home#about"
+  get 'dashboard', to: 'organizer_dashboard#index'
   root "home#index"
 
   get "attendee_dashboard/index", to: "attendee_dashboard#index", as: "attendee_dashboard_index"

@@ -1,0 +1,43 @@
+<%= render 'home/navbar' %>
+
+<h1>Organizer Dashboard</h1>
+
+<% if current_user.is_a?(AdminUser) %>
+  <p>Welcome, Admin! You can manage all events.</p>
+<% else %>
+  <p>Welcome, <%= current_user.username %>! Here are your events.</p>
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Category</th>
+      <th>Start Time</th>
+      <th>End Time</th>
+      <th>Location</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @events.each do |event| %>
+      <tr>
+        <td><%= link_to event.name, event_path(event) %></td>
+        <td><%= event.event_type.capitalize %></td>
+        <td><%= event.category.presence || "None" %></td>
+        <td><%= event.start_time.present? ? event.start_time.strftime("%B %d, %Y %I:%M %p") : "Not set" %></td>
+        <td><%= event.end_time.present? ? event.end_time.strftime("%B %d, %Y %I:%M %p") : "Not set" %></td>
+        <td><%= event.location %></td>
+        <td>
+          <%= link_to "Edit", edit_event_path(event), class: "btn btn-primary btn-sm" %>
+          <%= link_to "Delete", event_path(event), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "Create New Event", new_event_path, class: "btn btn-success" %>
+
+<%= render 'home/footer' %>
