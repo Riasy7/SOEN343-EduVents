@@ -31,7 +31,7 @@
 <% end %>
 
 <% if current_user.is_a?(OrganizerUser) || current_user.is_a?(ExecutiveUser) %>
-<%= link_to "Back to Dashboard", organizer_dashboard_index_path, class: "btn btn-secondary" %>
+<%= link_to "Back to Dashboard", organizer_dashboard_path, class: "btn btn-secondary" %>
 <% end %>
 
 <% if current_user.is_a?(AttendeeUser) %>
