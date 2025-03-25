@@ -1,0 +1,24 @@
+<div class="container mt-4">
+  <h1>Events</h1>
+  <div class="row">
+    <div class="col-lg-8 offset-lg-2">
+      <div class="list-group">
+        <% @events.each do |event| %>
+        <div class="list-group-item d-flex justify-content-between align-items-center mb-3">
+          <div>
+            <h5 class="mb-1"><%= event.name %></h5>
+            <p class="mb-1"><%= event.description %></p>
+            <small class="text-muted">Event Type: <%= event.event_type %></small>
+          </div>
+          <div>
+            <%= link_to "Register as listener", register_as_listener_event_path(event), class: 'btn btn-primary btn-sm', method: :post, data: { turbo_method: :post } %>
+            <% if current_user.attendee_type == "speaker" %>
+            <%= link_to "Register as speaker", register_as_speaker_event_path(event), class: 'btn btn-secondary btn-sm', method: :post, data: { turbo_method: :post } %>
+            <% end %>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
