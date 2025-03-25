@@ -7,7 +7,7 @@
 <p>Event Details:</p>
 <ul>
   <li>Event: <%= @event.name %></li>
-  <li>Location: <%= @event.location %></li>
+  <li>Location: <%= @event.venue.location.get_full_address %></li>
   <li>Role: <%= @event_registration.role.capitalize %></li>
 </ul>
 
