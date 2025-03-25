@@ -4,6 +4,6 @@
 <p><strong>Attendee:</strong> <%= @user.first_name + " " + @user.last_name %></p>
 <p><strong>Role:</strong> <%= @event_registration.role %></p>
 
-<%= link_to "Back to Events", events_path, class: "btn btn-secondary" %>
+<%= link_to "Back to Events", attendee_dashboard_events_path, class: "btn btn-secondary" %>
 
 <%= link_to "Cancel your attendance for this event", event_registration_path(@event_registration), method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-danger" %>
