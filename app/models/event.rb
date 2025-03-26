@@ -1,5 +1,5 @@
 class Event < ApplicationRecord
-    has_many :event_registrations
+    has_many :event_registrations, dependent: :destroy # this deletes all event registrations upon event.destroy
     has_many :attendees, through: :event_registrations, source: :attendee
     has_many_attached :resources
 
@@ -7,7 +7,7 @@ class Event < ApplicationRecord
     belongs_to :venue, optional: true
 
     validate  :end_time_after_start_time
-    validates :name, :location, :organizer_id, :start_time, :end_time, presence: true
+    validates :name, :organizer_id, :start_time, :end_time, presence: true
     validates :event_type, presence: true, inclusion: { in: %w[conference workshop seminar competition other] }
 
   def end_time_after_start_time

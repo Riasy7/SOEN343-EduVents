@@ -28,7 +28,7 @@
         <td><%= event.category.presence || "None" %></td>
         <td><%= event.start_time.present? ? event.start_time.strftime("%B %d, %Y %I:%M %p") : "Not set" %></td>
         <td><%= event.end_time.present? ? event.end_time.strftime("%B %d, %Y %I:%M %p") : "Not set" %></td>
-        <td><%= event.location %></td>
+        <td><%= event.venue.location.get_full_address %></td>
         <td>
           <%= link_to "Edit", edit_event_path(event), class: "btn btn-primary btn-sm" %>
           <%= link_to "Delete", event_path(event), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm" %>
@@ -39,5 +39,3 @@
 </table>
 
 <%= link_to "Create New Event", new_event_path, class: "btn btn-success" %>
-
-<%= render 'home/footer' %>

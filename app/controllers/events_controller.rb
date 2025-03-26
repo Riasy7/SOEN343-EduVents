@@ -46,9 +46,9 @@ class EventsController < ApplicationController
 
   def destroy
     if @event.destroy
-      redirect_to events_path, notice: "Event was successfully deleted."
+      redirect_to organizer_dashboard_path, notice: "Event was successfully deleted."
     else
-      redirect_to events_path, alert: "Error: Unable to delete event."
+      redirect_to organizer_dashboard_path, alert: "Error: Unable to delete event."
     end
   end
 
@@ -59,7 +59,7 @@ class EventsController < ApplicationController
   end
 
   def event_params
-    params.require(:event).permit(:name, :event_type, :location, :start_time, :end_time, :category, resources: [])
+    params.require(:event).permit(:name, :event_type, :start_time, :end_time, :venue_id, :category, resources: [])
   end
 
   def authorize_event_manager!

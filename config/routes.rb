@@ -3,11 +3,12 @@ Rails.application.routes.draw do
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 
   get "about" => "home#about"
-  get 'organizer_dashboard', to: 'organizer_dashboard#index'
   root "home#index"
+  
+  get "organizer_dashboard", to: "organizer_dashboard#index"
 
-  get "attendee_dashboard/index", to: "attendee_dashboard#index", as: "attendee_dashboard_index"
-  get "attendee_dashboard/events", to: "attendee_dashboard#events", as: "attendee_dashboard_events"
+  get "attendee_dashboard", to: "attendee_dashboard#index"
+  get "attendee_dashboard/events", to: "attendee_dashboard#events"
 
   resources :event_registration
   resources :events do

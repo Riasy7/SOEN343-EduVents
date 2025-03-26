@@ -45,8 +45,7 @@
     <% end %>   
     <%= yield %>
     <% if controller_name == "home" || current_page?("/users/sign_up") || current_page?("/users/sign_in") %>
-    <%= render "home/footer" %>
-    
+        <%= render "home/footer" %>
     <% end %>
 </body>
 

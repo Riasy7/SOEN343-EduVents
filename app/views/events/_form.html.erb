@@ -12,16 +12,18 @@
   </div>
 
   <div class="form-group">
-    <%= f.input :start_time, as: :datetime, label: "Start Time" %>
+    <%= f.date_select :start_time, as: :datetime, label: "Start Time" %>
   </div>
 
   <div class="form-group">
-    <%= f.input :end_time, as: :datetime, label: "End Time" %>
+    <%= f.date_select :end_time, as: :datetime, label: "End Time" %>
   </div>
 
   <div class="form-group">
-    <%= f.input :location, label: "Location" %>
+    <%= f.label :venue_id, "Venue" %>
+    <%= f.select :venue_id, Venue.all.pluck(:name, :id), { include_blank: "Select a Venue" } %>
   </div>
+
 
   <div class="form-group">
     <%= f.label :resources, "Upload Resources (PDFs, Images, etc.)" %>
