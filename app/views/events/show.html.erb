@@ -34,6 +34,12 @@
 <%= link_to "Back to Dashboard", organizer_dashboard_path, class: "btn btn-secondary" %>
 <% end %>
 
+<% if current_user.payments.exists?(event: @event) %>
+  <p class="text-success">You have already paid for this event.</p>
+<% else %>
+  <%= button_to "Pay for Event", checkouts_path(event_id: @event.id), method: :post, class: "btn btn-success" %>
+<% end %>
+
 <% if current_user.is_a?(AttendeeUser) %>
 <% if current_user.registered_for_event?(@event.id) %>
 <%= link_to "View registration details", event_registration_path(current_user.get_registration_for_event(@event.id)), class: "btn btn-success" %>
@@ -47,4 +53,6 @@
 <% if current_user.is_a?(OrganizerUser) || current_user.is_a?(ExecutiveUser) || current_user.is_a?(AdminUser) %>
 <%= link_to "Edit Event", edit_event_path(@event), class: "btn btn-primary" %>
 <%= link_to "Delete", event_path(@event), method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-danger" %>
+
+
 <% end %>

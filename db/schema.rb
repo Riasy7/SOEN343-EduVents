@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_25_041044) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_26_055912) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -93,6 +93,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_25_041044) do
     t.datetime "start_time"
     t.datetime "end_time"
     t.string "category"
+    t.integer "price_cents"
   end
 
   create_table "locations", force: :cascade do |t|
@@ -117,6 +118,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_25_041044) do
     t.string "phone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "event_id", null: false
+    t.decimal "amount"
+    t.string "currency"
+    t.string "status"
+    t.string "stripe_payment_intent_id"
+    t.string "stripe_charge_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_payments_on_event_id"
+    t.index ["user_id"], name: "index_payments_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -153,4 +168,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_25_041044) do
   add_foreign_key "events", "venues"
   add_foreign_key "locations", "organizations"
   add_foreign_key "locations", "venues"
+  add_foreign_key "payments", "events"
+  add_foreign_key "payments", "users"
 end

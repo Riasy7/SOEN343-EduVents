@@ -8,6 +8,7 @@ AttendeeUser.delete_all
 Location.delete_all
 Venue.delete_all
 Organization.delete_all
+Event.delete_all
 
 # Repopulate the db
 AdminUser.create!(username: "admin", password: "password", email: "admin@edu-events.ca", first_name: "John", last_name: "Doe")
@@ -36,7 +37,7 @@ events = [
 ]
 
 events.each do |event_data|
-  event = Event.create!(name: event_data[:name], event_type: event_data[:event_type], organizer_id: organizer.id, venue_id: venue.id, start_time: Date.today, end_time: Date.tomorrow)
+  event = Event.create!(name: event_data[:name], event_type: event_data[:event_type], organizer_id: organizer.id, venue_id: venue.id, start_time: Date.today, end_time: Date.tomorrow, price_cents: 1500)
   EventRegistration.create!(event_id: event.id, attendee_id: listener.id, role: "listener") if rand(2) == 1
   EventRegistration.create!(event_id: event.id, attendee_id: speaker.id, role: "speaker") if rand(2) == 1
 end

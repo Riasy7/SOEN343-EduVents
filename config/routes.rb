@@ -18,4 +18,18 @@ Rails.application.routes.draw do
       post :register_as_speaker, to: "event_registration#register_as_speaker"
     end
   end
+  resources :events
+
+  # stripe checkout routes
+  resources :checkouts, only: [:create] do
+    collection do
+      get :success
+      get :cancel
+    end
+  end
+
+  # payment history routes
+  resources :users do
+    resources :payments, only: [:index]
+  end
 end
