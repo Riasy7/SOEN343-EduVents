@@ -6,11 +6,11 @@ class ApplicationController < ActionController::Base
   before_action :sign_out_on_public_pages
 
   def after_sign_in_path_for(_resource)
-    attendee_dashboard_index_path
+    dashboard_path_for(_resource)
   end
 
   def after_sign_up_path_for(_resource)
-    attendee_dashboard_index_path
+    dashboard_path_for(_resource)
   end
 
   def after_sign_out_path_for(_resource_or_scope)
@@ -18,6 +18,14 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def dashboard_path_for(_resource)
+    if _resource.is_a?(AttendeeUser)
+      attendee_dashboard_path
+    elsif _resource.is_a?(OrganizerUser)
+      organizer_dashboard_path
+    end
+  end
 
   def sign_out_on_public_pages
     public_pages = [ about_path, root_path ]

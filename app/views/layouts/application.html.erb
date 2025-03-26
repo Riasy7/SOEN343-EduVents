@@ -36,12 +36,24 @@
 <body>
     <% if controller_name == "home" || current_page?("/users/sign_up") || current_page?("/users/sign_in") %>
     <%= render "home/navbar" %>
+    <% elsif current_user.is_a?(AttendeeUser) %>
+        <%= render "attendee_dashboard/navbar" %>
+    <% elsif current_user.is_a?(OrganizerUser) %>
+        <%= render "organizer_dashboard/navbar" %>
     <% end %>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
+    <% if notice.present? %>
+        <p class="notice alert alert-success"><%= notice %></p>
+    <% end %>
+    <% if alert.present? %>
+    <p class="alert alert-danger"><%= alert %></p>
+    <% end %>   
+
+    <div class="<%= 'default-padding' unless controller_name == "home" %>">
+        <%= yield %>
+    </div>
+
     <% if controller_name == "home" || current_page?("/users/sign_up") || current_page?("/users/sign_in") %>
-    <%= render "home/footer" %>
+        <%= render "home/footer" %>
     <% end %>
 </body>
 

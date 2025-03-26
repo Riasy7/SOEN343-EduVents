@@ -3,7 +3,7 @@ FactoryBot.define do
     name { "MyString" }
     description { "MyText" }
     event_type { "MyString" }
-    location { "MyString" }
+    venue_id { create(:venue).id }
     organizer_id { create(:organizer).id }
     published_at { "2025-03-12 16:52:13" }
 

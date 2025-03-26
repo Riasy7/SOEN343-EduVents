@@ -4,9 +4,12 @@ Rails.application.routes.draw do
 
   get "about" => "home#about"
   root "home#index"
+  
+  get "organizer_dashboard", to: "organizer_dashboard#index"
 
-  get "attendee_dashboard/index", to: "attendee_dashboard#index", as: "attendee_dashboard_index"
-  get "attendee_dashboard/events", to: "attendee_dashboard#events", as: "attendee_dashboard_events"
+  get "attendee_dashboard", to: "attendee_dashboard#index"
+  get "attendee_dashboard/browse", to: "attendee_dashboard#browse_events"
+  get "attendee_dashboard/events", to: "attendee_dashboard#event_registrations"
 
   resources :event_registration
   resources :events do

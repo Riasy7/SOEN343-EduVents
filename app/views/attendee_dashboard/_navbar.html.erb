@@ -7,19 +7,19 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link <%= "active" if current_page?("/") %>" aria-current="page" href="<%= root_path %>">Home</a>
+            <a class="nav-link <%= "active" if current_page?("/attendee_dashboard") %>" aria-current="page" href="<%= attendee_dashboard_path %>">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <%= "active" if current_page?("/about") %>" aria-current="page" href="<%= about_path %>">About</a>
+            <a class="nav-link <%= "active" if current_page?("/attendee_dashboard/browse") %>" aria-current="page" href="<%= attendee_dashboard_browse_path %>">Browse</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <%= "active" if current_page?("/attendee_dashboard/events") %>" aria-current="page" href="<%= attendee_dashboard_events_path %>">My events</a>
         </li>
       </ul>
 
       <ul class="d-flex" style="list-style-type: none; gap: 8px">
         <li class="nav-item">
-          <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-primary"%>
-        </li>
-        <li class="nav-item">
-          <%= link_to "Log In", new_user_session_path, class: "btn btn-secondary"%>
+          <%= link_to "Sign Out", destroy_user_session_path, class: "btn btn-secondary", method: :delete %>
         </li>
       </ul>
     </div>
