@@ -2,4 +2,10 @@
 
 <%= render 'form' %>
 
-<%= link_to "Back to Events", events_path, class: "btn btn-secondary" %>
+<% if current_user.is_a?(AdminUser) %>
+    <%= link_to "Back to Events", events_path, class: "btn btn-secondary" %>
+<% end %>
+
+<% if current_user.is_a?(OrganizerUser) || current_user.is_a?(ExecutiveUser) %>
+    <%= link_to "Back to Dashboard", organizer_dashboard_path, class: "btn btn-secondary" %>
+<% end %>

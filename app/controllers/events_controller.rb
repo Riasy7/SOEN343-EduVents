@@ -3,7 +3,7 @@ class EventsController < ApplicationController
   before_action :authorize_event_manager!, only: [:new, :create, :edit, :update, :destroy]
   before_action :authorize_admin!, only: [:index]
   before_action :set_event, only: [:show, :edit, :update, :destroy]
-  before_action :authorize_event_owner!, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_event_owner!, only: [:edit, :update, :destroy]
 
   def index
     @events = Event.all

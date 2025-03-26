@@ -13,9 +13,9 @@ class EventRegistrationController < ApplicationController
     @event_registration = EventRegistration.find(params[:id])
 
     if @event_registration.destroy
-      redirect_to events_path, notice: "Event registration was successfully canceled."
+      redirect_to attendee_dashboard_events_path, notice: "Event registration was successfully canceled."
     else
-      redirect_to events_path, alert: "Error: Unable to cancel event registration."
+      redirect_to attendee_dashboard_events_path, alert: "Error: Unable to cancel event registration."
     end
   end
 

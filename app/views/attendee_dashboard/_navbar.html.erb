@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+            <a class="nav-link <%= "active" if current_page?("/attendee_dashboard") %>" aria-current="page" href="<%= attendee_dashboard_path %>">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <%= "active" if current_page?("/attendee_dashboard/browse") %>" aria-current="page" href="<%= attendee_dashboard_browse_path %>">Browse</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <%= "active" if current_page?("/attendee_dashboard/events") %>" aria-current="page" href="<%= attendee_dashboard_events_path %>">My events</a>
+        </li>
+      </ul>
+
+      <ul class="d-flex" style="list-style-type: none; gap: 8px">
+        <li class="nav-item">
+          <%= link_to "Sign Out", destroy_user_session_path, class: "btn btn-secondary", method: :delete %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

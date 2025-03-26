@@ -5,8 +5,12 @@ class AttendeeDashboardController < ApplicationController
   def index
   end
 
-  def events
+  def browse_events
     @events = RecommendedEventsService.new(current_user).call
+  end
+
+  def event_registrations
+    @event_registrations = current_user.event_registrations
   end
 
   private
