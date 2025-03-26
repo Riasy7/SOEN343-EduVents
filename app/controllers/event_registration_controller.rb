@@ -1,13 +1,13 @@
 class EventRegistrationController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_event_registration, only: [:destroy, :show]
+  before_action :set_event_registration, only: [ :destroy, :show ]
 
   # callbacks used so that speakers can attend as both listeners, or speakers
   # and so that listeners can only attend as listeners
-  before_action :authorize_attendee!, only: [:register_as_listener]
-  before_action :authorize_speaker_attendee!, only: [:register_as_speaker]
+  before_action :authorize_attendee!, only: [ :register_as_listener ]
+  before_action :authorize_speaker_attendee!, only: [ :register_as_speaker ]
 
-  before_action :check_owner!, only: [:destroy, :show]
+  before_action :check_owner!, only: [ :destroy, :show ]
 
   def destroy
     @event_registration = EventRegistration.find(params[:id])
@@ -30,7 +30,7 @@ class EventRegistrationController < ApplicationController
     # create new event registration immediatly if the event is free
     if event.price_cents.nil? || event.price_cents == 0
       @event_registration = EventRegistration.create(attendee_id:, event_id:, role:)
-      EventRegistrationMailer.registration_confirmation(@event_registration).deliver_later
+      NotificationService.call(@event_registration.attendee, :event_registration_confirmation, @event_registration)
       redirect_to @event_registration, notice: "You successfully registered for #{event.name}." and return
     end
 
