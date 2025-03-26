@@ -13,4 +13,17 @@ Rails.application.routes.draw do
   get "about" => "home#about"
   root "home#index"
   resources :events
+
+  # stripe checkout routes
+  resources :checkouts, only: [:create] do
+    collection do
+      get :success
+      get :cancel
+    end
+  end
+
+  # payment history routes
+  resources :users do
+    resources :payments, only: [:index]
+  end
 end

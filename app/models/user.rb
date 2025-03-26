@@ -10,4 +10,7 @@ class User < ApplicationRecord
 
   # belongs to an organization, not sure if it should be optional
   belongs_to :organization, optional: true
+
+  # added payment for stripe integration
+  has_many :payments, dependent: :destroy
 end

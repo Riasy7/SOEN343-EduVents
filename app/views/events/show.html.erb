@@ -4,6 +4,12 @@
 <p><strong>Location:</strong> <%= @event.location %></p>
 <p><strong>Organizer:</strong> <%= @event.organizer.username %></p>
 
+<% if current_user.payments.exists?(event: @event) %>
+  <p class="text-success">You have already paid for this event.</p>
+<% else %>
+  <%= button_to "Pay for Event", checkouts_path(event_id: @event.id), method: :post, class: "btn btn-success" %>
+<% end %>
+
 <%= link_to "Back to Events", events_path, class: "btn btn-secondary" %>
 
 <% if current_user.is_a?(OrganizerUser) || current_user.is_a?(ExecutiveUser) || current_user.is_a?(AdminUser) %>

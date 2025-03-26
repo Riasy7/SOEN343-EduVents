@@ -5,11 +5,12 @@ OrganizerUser.delete_all
 AttendeeUser.delete_all
 Location.delete_all
 Organization.delete_all
+Event.delete_all
 
 # Repopulate the db
 AdminUser.create!(username: "admin", password: "password", email: "admin@edu-events.ca", first_name: "John", last_name: "Doe")
 ExecutiveUser.create!(username: "executive", password: "password", email: "executive@edu-events.ca", first_name: "Jane", last_name: "Smith")
-OrganizerUser.create!(username: "organizer", password: "password", email: "organizer@edu-events.ca", first_name: "George", last_name: "Staples")
+organizer = OrganizerUser.create!(username: "organizer", password: "password", email: "organizer@edu-events.ca", first_name: "George", last_name: "Staples")
 AttendeeUser.create!(username: "speaker", password: "password", email: "speaker@edu-events.ca", first_name: "Marc", last_name: "Williams", attendee_type: "speaker")
 AttendeeUser.create!(username: "listener", password: "password", email: "listener@edu-events.ca", first_name: "Sarah", last_name: "Hull", attendee_type: "listener")
 
@@ -23,4 +24,14 @@ Organization.create!(
     { name: "SGW Campus", address1: "1455 De Maisonneuve Blvd. W.", city: "Montreal", state: "QC", country: "CANADA", postal_code: "H3G 1M8" },
     { name: "Loyola Campus", address1: "7141 Sherbrooke St. W.", city: "Montreal", state: "QC", country: "CANADA", postal_code: "H4B 1R6" }
   ]
+)
+
+Event.create!(
+  name: "Tech Conference 2025",
+  description: "A conference about the latest in technology.",
+  event_type: "conference",
+  location: "SGW Campus",
+  organizer_id: organizer.id,
+  published_at: Time.now,
+  price_cents: 1500
 )

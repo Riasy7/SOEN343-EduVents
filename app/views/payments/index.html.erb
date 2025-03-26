@@ -1,0 +1,22 @@
+<h1>Payment History</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Event</th>
+      <th>Amount</th>
+      <th>Status</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @payments.each do |payment| %>
+      <tr>
+        <td><%= payment.event.name %></td>
+        <td>$<%= payment.amount %></td>
+        <td><%= payment.status.capitalize %></td>
+        <td><%= payment.created_at.strftime("%B %d, %Y") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

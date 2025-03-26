@@ -6,5 +6,6 @@ FactoryBot.define do
     location { "MyString" }
     organizer_id { 1 }
     published_at { "2025-03-12 16:52:13" }
+    price_cents { 1500 }
   end
 end
