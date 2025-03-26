@@ -1,4 +1,5 @@
 # Delete all objects to reset the db
+NotificationPreference.delete_all
 EventRegistration.delete_all
 Event.delete_all
 AdminUser.delete_all
@@ -40,3 +41,5 @@ events.each do |event_data|
   EventRegistration.create!(event_id: event.id, attendee_id: listener.id, role: "listener") if rand(2) == 1
   EventRegistration.create!(event_id: event.id, attendee_id: speaker.id, role: "speaker") if rand(2) == 1
 end
+
+attendee_notification_preference = NotificationPreference.create!(sms_enabled: true, email_enabled: true, user_id: listener.id)
