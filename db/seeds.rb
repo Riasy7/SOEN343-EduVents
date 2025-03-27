@@ -17,7 +17,7 @@ organizer = OrganizerUser.create!(username: "organizer", password: "password", e
 speaker = AttendeeUser.create!(username: "speaker", password: "password", email: "speaker@edu-events.ca", first_name: "Marc", last_name: "Williams", attendee_type: "speaker")
 listener = AttendeeUser.create!(username: "listener", password: "password", email: "listener@edu-events.ca", first_name: "Sarah", last_name: "Hull", attendee_type: "listener")
 organization = Organization.create!(name: "Concordia University", website: "https://www.concordia.ca", phone: "+5141234567")
-venue = Venue.create!(name: "H - Sir George Williams University Alumni Auditorium (H-110)", max_capacity: 692, price_per_seat: 0.0)
+venue = Venue.create!(name: "H - Sir George Williams University Alumni Auditorium (H-110)", max_capacity: 692)
 location = Location.create!(name: "SGW Campus", address1: "1455 De Maisonneuve Blvd. W.", address2: "Suite 203", city: "Montreal", state: "QC", country: "CANADA", postal_code: "H3G 1M8", organization_id: organization.id, venue_id: venue.id)
 
 events = [

@@ -30,9 +30,15 @@ class EventRegistrationController < ApplicationController
 
     if @event_registration.save
       EventRegistrationMailer.registration_confirmation(@event_registration).deliver_later
-      redirect_to @event_registration, notice: "You successfully registered for #{@event_registration.event.name}."
+
+      event = @event_registration.event
+      if event.price_cents.present? && event.price_cents > 0
+        redirect_to @event_registration, notice: "You have been registered. Please complete your payment to confirm your attendance."
+      else
+        redirect_to @event_registration, notice: "You successfully registered for #{event.name}."
+      end
     else
-      redirect_to @event, alert: "Registration failed: #{@event_registration.errors.full_messages.to_sentence}"
+      redirect_to events_path, alert: "Registration failed: #{@event_registration.errors.full_messages.to_sentence}"
     end
   end
 

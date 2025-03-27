@@ -26,33 +26,21 @@
 <p>No resources uploaded.</p>
 <% end %>
 
-<% if current_user.is_a?(AdminUser) %>
-<%= link_to "Back to Events", events_path, class: "btn btn-secondary" %>
-<% end %>
-
-<% if current_user.is_a?(OrganizerUser) || current_user.is_a?(ExecutiveUser) %>
-<%= link_to "Back to Dashboard", organizer_dashboard_path, class: "btn btn-secondary" %>
-<% end %>
-
-<% if current_user.payments.exists?(event: @event) %>
-  <p class="text-success">You have already paid for this event.</p>
-<% else %>
-  <%= button_to "Pay for Event", checkouts_path(event_id: @event.id), method: :post, class: "btn btn-success" %>
-<% end %>
-
 <% if current_user.is_a?(AttendeeUser) %>
-<% if current_user.registered_for_event?(@event.id) %>
-<%= link_to "View registration details", event_registration_path(current_user.get_registration_for_event(@event.id)), class: "btn btn-success" %>
-<% else %>
-<%= link_to "Register as listener", register_as_listener_event_path(@event), method: :post, class: "btn btn-success" %>
-<% if current_user.attendee_type == "speaker" %>
-<%= link_to "Register as speaker", register_as_speaker_event_path(@event), method: :post, class: "btn btn-success" %>
+  <% if current_user.registered_for_event?(@event.id) %>
+    <p class="text-success">You are already registered for this event.</p>
+    <%= link_to "View Registration Details", event_registration_path(current_user.get_registration_for_event(@event.id)), class: "btn btn-success" %>
+  <% else %>
+    <%= link_to "Register as Listener", register_as_listener_event_path(@event), method: :post, class: "btn btn-success" %>
+    <% if current_user.attendee_type == "speaker" %>
+      <%= link_to "Register as Speaker", register_as_speaker_event_path(@event), method: :post, class: "btn btn-success" %>
+    <% end %>
+  <% end %>
 <% end %>
-<% end %>
-<% end %>
+
 <% if current_user.is_a?(OrganizerUser) || current_user.is_a?(ExecutiveUser) || current_user.is_a?(AdminUser) %>
-<%= link_to "Edit Event", edit_event_path(@event), class: "btn btn-primary" %>
-<%= link_to "Delete", event_path(@event), method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-danger" %>
-
-
+  <%= link_to "Edit Event", edit_event_path(@event), class: "btn btn-primary" %>
+  <%= link_to "Delete", event_path(@event), method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-danger" %>
 <% end %>
+
+<%= link_to "Back to Events", events_path, class: "btn btn-secondary" %>
