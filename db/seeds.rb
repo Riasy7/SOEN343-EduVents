@@ -1,3 +1,5 @@
+Rails.application.eager_load!
+
 # Delete all objects to reset the db
 EventRegistration.delete_all
 Event.delete_all

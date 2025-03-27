@@ -19,13 +19,19 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def dashboard_path_for(_resource)
-    if _resource.is_a?(AttendeeUser)
+  def dashboard_path_for(resource)
+    case resource
+    when AttendeeUser
       attendee_dashboard_path
-    elsif _resource.is_a?(OrganizerUser)
+    when OrganizerUser
       organizer_dashboard_path
+    when AdminUser
+      organizer_dashboard_path # for now bring to organizer dashboard
+    else
+      root_path
     end
   end
+
 
   def sign_out_on_public_pages
     public_pages = [ about_path, root_path ]
