@@ -8,7 +8,6 @@ AttendeeUser.delete_all
 Location.delete_all
 Venue.delete_all
 Organization.delete_all
-Event.delete_all
 
 # Repopulate the db
 AdminUser.create!(username: "admin", password: "password", email: "admin@edu-events.ca", first_name: "John", last_name: "Doe")

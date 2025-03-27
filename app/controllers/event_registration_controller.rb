@@ -21,25 +21,21 @@ class EventRegistrationController < ApplicationController
 
   def register(attendee_id, event_id, role)
     attendee = AttendeeUser.find(attendee_id)
+    event = Event.find(event_id)
 
     if attendee.registered_for_event?(event_id)
-      redirect_to events_path, alert: "You are already registered for this event." and return
+      redirect_to attendee_dashboard_events_path, alert: "You are already registered for this event." and return
     end
 
-    @event_registration = EventRegistration.new(attendee_id:, event_id:, role:)
-
-    if @event_registration.save
+    # create new event registration immediatly if the event is free
+    if event.price_cents.nil? || event.price_cents == 0
+      @event_registration = EventRegistration.create(attendee_id:, event_id:, role:)
       EventRegistrationMailer.registration_confirmation(@event_registration).deliver_later
-
-      event = @event_registration.event
-      if event.price_cents.present? && event.price_cents > 0
-        redirect_to @event_registration, notice: "You have been registered. Please complete your payment to confirm your attendance."
-      else
-        redirect_to @event_registration, notice: "You successfully registered for #{event.name}."
-      end
-    else
-      redirect_to events_path, alert: "Registration failed: #{@event_registration.errors.full_messages.to_sentence}"
+      redirect_to @event_registration, notice: "You successfully registered for #{event.name}." and return
     end
+
+    # paid event so we redirect to stripe checkout
+    render "checkouts/redirect", locals: { event_id: event.id, attendee_id: attendee.id, role: role }
   end
 
   def register_as_listener
@@ -52,7 +48,6 @@ class EventRegistrationController < ApplicationController
 
   def show
     @event_registration = EventRegistration.find(params[:id])
-    @event = @event_registration.event
     @user = @event_registration.attendee
   end
 

@@ -4,11 +4,5 @@
 <p><strong>Attendee:</strong> <%= @user.first_name + " " + @user.last_name %></p>
 <p><strong>Role:</strong> <%= @event_registration.role %></p>
 
-<% if current_user.payments.exists?(event: @event_registration.event) %>
-  <p class="text-success">You have already paid for this event.</p>
-<% else %>
-  <%= button_to "Pay for Event", checkouts_path(event_id: @event_registration.event.id), method: :post, class: "btn btn-success" %>
-<% end %>
-
 <%= link_to "Cancel your attendance for this event", event_registration_path(@event_registration), method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-danger" %>
 <%= link_to "Back to Event", event_path(@event_registration.event), class: "btn btn-secondary" %>

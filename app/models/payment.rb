@@ -7,16 +7,4 @@ class Payment < ApplicationRecord
 
   scope :successful, -> { where(status: 'paid') }
   scope :failed, -> { where(status: 'failed') }
-
-  after_save :register_attendee_if_paid
-
-  private
-
-  def register_attendee_if_paid
-    return unless status == 'paid'
-
-    if user.is_a?(AttendeeUser) && !EventRegistration.exists?(event: event, attendee: user)
-      EventRegistration.create!(event: event, attendee: user, role: user.attendee_type)
-    end
-  end
 end

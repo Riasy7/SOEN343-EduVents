@@ -3,6 +3,7 @@ class CheckoutsController < ApplicationController
 
   def create
     event = Event.find(params[:event_id])
+    attendee = AttendeeUser.find(params[:attendee_id])
 
     unless current_user.is_a?(AttendeeUser)
       flash[:alert] = "Only attendees can register for events."
@@ -12,6 +13,11 @@ class CheckoutsController < ApplicationController
     session = Stripe::Checkout::Session.create(
       payment_method_types: ['card'],
       customer_email: current_user.email,
+      metadata: {
+        attendee_id: attendee.id,
+        event_id: event.id,
+        role: params[:role]
+      },
       line_items: [{
         price_data: {
           currency: 'usd',
@@ -33,13 +39,16 @@ class CheckoutsController < ApplicationController
   def success
     session = Stripe::Checkout::Session.retrieve(params[:session_id])
     payment_intent = Stripe::PaymentIntent.retrieve(session.payment_intent)
-    line_items = Stripe::Checkout::Session.list_line_items(session.id)
+    
+    attendee_id = session.metadata.attendee_id
+    event_id = session.metadata.event_id
+    role = session.metadata.role
 
-    event_name = line_items.data[0].description
-    event = Event.find_by(name: event_name)
+    event = Event.find(event_id)
+    attendee = AttendeeUser.find(attendee_id)
 
-    unless event
-      flash[:alert] = "Event not found."
+    unless event && attendee
+      flash[:alert] = "Event or Attendee not found."
       redirect_to root_path and return
     end
 
@@ -52,6 +61,9 @@ class CheckoutsController < ApplicationController
       stripe_payment_intent_id: payment_intent.id
     )
 
+    event_registration = EventRegistration.create!(attendee_id: attendee.id, event_id: event.id, role: role)
+
+    EventRegistrationMailer.registration_confirmation(event_registration).deliver_later
     PaymentMailer.payment_success(payment).deliver_now
 
     flash[:notice] = "Payment successful! You are now registered for the event."

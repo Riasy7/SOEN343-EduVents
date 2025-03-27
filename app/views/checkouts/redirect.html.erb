@@ -1,0 +1,9 @@
+<%= form_with url: checkouts_path, method: :post, local: true do |f| %>
+<%= hidden_field_tag :event_id, event_id %>
+<%= hidden_field_tag :attendee_id, attendee_id %>
+<%= hidden_field_tag :role, role %>
+<% end %>
+
+<script>
+    document.forms[0].submit();
+</script>
