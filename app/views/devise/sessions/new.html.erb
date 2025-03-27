@@ -1,19 +1,25 @@
-<h2>Log in</h2>
+<h2 class="mb-4">Log in</h2>
 
-<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="form-inputs">
-    <%= f.input :email,
-                required: false,
-                autofocus: true,
-                input_html: { autocomplete: "email" } %>
-    <%= f.input :password,
-                required: false,
-                input_html: { autocomplete: "current-password" } %>
-    <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "needs-validation" }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="mb-3">
+    <%= f.input :email, required: true, autofocus: true, input_html: { class: "form-control" } %>
   </div>
 
-  <div class="form-actions">
-    <%= f.button :submit, "Log in" %>
+  <div class="mb-3">
+    <%= f.input :password, required: true, input_html: { class: "form-control" } %>
+  </div>
+
+  <% if devise_mapping.rememberable? -%>
+    <div class="form-check mb-3">
+      <%= f.check_box :remember_me, class: "form-check-input" %>
+      <%= f.label :remember_me, class: "form-check-label" %>
+    </div>
+  <% end -%>
+
+  <div class="d-grid">
+    <%= f.button :submit, "Log in", class: "btn btn-primary w-100" %>
   </div>
 <% end %>
 
