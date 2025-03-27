@@ -1,5 +1,5 @@
 class EventCategoryBasedRecommendationStrategy
-  include RecommendationStrategy
+  include EventRecommendationStrategy
 
   def recommend(user)
     # TODO: uncomment this once category is added to event model
