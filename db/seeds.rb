@@ -16,7 +16,7 @@ organizer = OrganizerUser.create!(username: "organizer", password: "password", e
 speaker = AttendeeUser.create!(username: "speaker", password: "password", email: "speaker@edu-events.ca", first_name: "Marc", last_name: "Williams", attendee_type: "speaker")
 listener = AttendeeUser.create!(username: "listener", password: "password", email: "listener@edu-events.ca", first_name: "Sarah", last_name: "Hull", attendee_type: "listener")
 organization = Organization.create!(name: "Concordia University", website: "https://www.concordia.ca", phone: "+5141234567")
-venue = Venue.create!(name: "H - Sir George Williams University Alumni Auditorium (H-110)", max_capacity: 692, price_per_seat: 0.0)
+venue = Venue.create!(name: "H - Sir George Williams University Alumni Auditorium (H-110)", max_capacity: 692)
 location = Location.create!(name: "SGW Campus", address1: "1455 De Maisonneuve Blvd. W.", address2: "Suite 203", city: "Montreal", state: "QC", country: "CANADA", postal_code: "H3G 1M8", organization_id: organization.id, venue_id: venue.id)
 
 events = [
@@ -36,7 +36,7 @@ events = [
 ]
 
 events.each do |event_data|
-  event = Event.create!(name: event_data[:name], event_type: event_data[:event_type], organizer_id: organizer.id, venue_id: venue.id, start_time: Date.today, end_time: Date.tomorrow)
+  event = Event.create!(name: event_data[:name], event_type: event_data[:event_type], organizer_id: organizer.id, venue_id: venue.id, start_time: Date.today, end_time: Date.tomorrow, price_cents: 1500)
   EventRegistration.create!(event_id: event.id, attendee_id: listener.id, role: "listener") if rand(2) == 1
   EventRegistration.create!(event_id: event.id, attendee_id: speaker.id, role: "speaker") if rand(2) == 1
 end

@@ -14,4 +14,7 @@ class User < ApplicationRecord
   def get_full_name
     "#{first_name} #{last_name}"
   end
+  
+  # added payment for stripe integration
+  has_many :payments, dependent: :destroy
 end

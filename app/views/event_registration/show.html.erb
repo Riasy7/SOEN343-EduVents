@@ -1,7 +1,8 @@
 <h1>Event Registration</h1>
 
-<p><strong>Event:</strong> <%= @event_registration.event.name.capitalize %></p>
+<p><strong>Event:</strong> <%= link_to @event_registration.event.name.capitalize, event_path(@event_registration.event) %></p>
 <p><strong>Attendee:</strong> <%= @user.first_name + " " + @user.last_name %></p>
 <p><strong>Role:</strong> <%= @event_registration.role %></p>
 
 <%= link_to "Cancel your attendance for this event", event_registration_path(@event_registration), method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-danger" %>
+<%= link_to "Back to Event", event_path(@event_registration.event), class: "btn btn-secondary" %>

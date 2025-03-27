@@ -6,45 +6,40 @@
 <p><strong>Category:</strong> <%= @event.category.presence || "None" %></p>
 
 <p><strong>Start Time:</strong>
-  <%= @event.start_time.present? ? @event.start_time.strftime("%B %d, %Y %I:%M %p") : "Not set" %>
+    <%= @event.start_time.present? ? @event.start_time.strftime("%B %d, %Y %I:%M %p") : "Not set" %>
 </p>
 
 <p><strong>End Time:</strong>
-  <%= @event.end_time.present? ? @event.end_time.strftime("%B %d, %Y %I:%M %p") : "Not set" %>
+    <%= @event.end_time.present? ? @event.end_time.strftime("%B %d, %Y %I:%M %p") : "Not set" %>
 </p>
 
 <h3>Resources</h3>
 <% if @event.resources.attached? %>
 <ul>
-  <% @event.resources.each do |resource| %>
-  <li>
-    <%= link_to resource.filename, url_for(resource) %>
-  </li>
-  <% end %>
+    <% @event.resources.each do |resource| %>
+    <li>
+        <%= link_to resource.filename, url_for(resource) %>
+    </li>
+    <% end %>
 </ul>
 <% else %>
 <p>No resources uploaded.</p>
 <% end %>
 
-<% if current_user.is_a?(AdminUser) %>
-<%= link_to "Back to Events", events_path, class: "btn btn-secondary" %>
-<% end %>
-
-<% if current_user.is_a?(OrganizerUser) || current_user.is_a?(ExecutiveUser) %>
-<%= link_to "Back to Dashboard", organizer_dashboard_path, class: "btn btn-secondary" %>
-<% end %>
-
 <% if current_user.is_a?(AttendeeUser) %>
 <% if current_user.registered_for_event?(@event.id) %>
-<%= link_to "View registration details", event_registration_path(current_user.get_registration_for_event(@event.id)), class: "btn btn-success" %>
+<%= link_to "View Registration Details", event_registration_path(current_user.get_registration_for_event(@event.id)), class: "btn btn-success" %>
 <% else %>
-<%= link_to "Register as listener", register_as_listener_event_path(@event), method: :post, class: "btn btn-success" %>
+<%= link_to "Register as Listener", register_as_listener_event_path(@event), method: :post, class: "btn btn-success" %>
 <% if current_user.attendee_type == "speaker" %>
-<%= link_to "Register as speaker", register_as_speaker_event_path(@event), method: :post, class: "btn btn-success" %>
+<%= link_to "Register as Speaker", register_as_speaker_event_path(@event), method: :post, class: "btn btn-success" %>
 <% end %>
 <% end %>
 <% end %>
+
 <% if current_user.is_a?(OrganizerUser) || current_user.is_a?(ExecutiveUser) || current_user.is_a?(AdminUser) %>
 <%= link_to "Edit Event", edit_event_path(@event), class: "btn btn-primary" %>
 <%= link_to "Delete", event_path(@event), method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-danger" %>
 <% end %>
+
+<%= link_to "Back to Events", attendee_dashboard_events_path, class: "btn btn-secondary" %>
