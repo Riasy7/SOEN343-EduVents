@@ -15,6 +15,8 @@ class User < ApplicationRecord
   # belongs to an organization, not sure if it should be optional
   belongs_to :organization, optional: true
 
+  has_one :notification_preference
+
   def get_full_name
     "#{first_name} #{last_name}"
   end
