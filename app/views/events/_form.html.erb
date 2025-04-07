@@ -1,36 +1,45 @@
-<%= simple_form_for @event, html: { multipart: true } do |f| %>
-  <div class="form-group">
-    <%= f.input :name, label: "Event Name" %>
-  </div>
+<div class="container py-5 d-flex justify-content-center">
+  <div class="col-lg-7 col-xl-6 bg-white p-5 rounded-4 shadow border border-light" style="max-width: 720px;">
 
-  <div class="form-group">
-    <%= f.input :event_type, collection: %w[conference workshop seminar competition other], prompt: "Select Event Type" %>
-  </div>
+    <h2 class="text-center fw-bold mb-5" style="font-size: 2rem;">Create a New Event</h2>
 
-  <div class="form-group">
-    <%= f.input :category, label: "Category (e.g. Computer Science, Environment)" %>
-  </div>
+    <%= simple_form_for @event, html: { multipart: true, class: "form-wrapper" } do |f| %>
 
-  <div class="form-group">
-    <%= f.date_select :start_time, as: :datetime, label: "Start Time" %>
-  </div>
+      <div class="mb-4">
+        <%= f.input :name, label: "Event Name", input_html: { class: "form-control rounded-3 px-4 py-3 fs-5" } %>
+      </div>
 
-  <div class="form-group">
-    <%= f.date_select :end_time, as: :datetime, label: "End Time" %>
-  </div>
+      <div class="mb-4">
+        <%= f.input :event_type, collection: %w[conference workshop seminar competition other], prompt: "Select Event Type", label: "Event Type", input_html: { class: "form-select rounded-3 px-4 py-3 fs-5" } %>
+      </div>
 
-  <div class="form-group">
-    <%= f.label :venue_id, "Venue" %>
-    <%= f.select :venue_id, Venue.all.pluck(:name, :id), { include_blank: "Select a Venue" } %>
-  </div>
+      <div class="mb-4">
+        <%= f.input :category, label: "Category (e.g. Computer Science, Environment)", input_html: { class: "form-control rounded-3 px-4 py-3 fs-5" } %>
+      </div>
 
+      <div class="mb-4">
+        <%= f.input :start_time, as: :string, label: "Start Time", input_html: { class: "form-control datetime-picker start-time rounded-3 px-4 py-3 fs-5", placeholder: "Select start time" } %>
+      </div>
 
-  <div class="form-group">
-    <%= f.label :resources, "Upload Resources (PDFs, Images, etc.)" %>
-    <%= f.file_field :resources, multiple: true %>
-  </div>
+      <div class="mb-4">
+        <%= f.input :end_time, as: :string, label: "End Time", input_html: { class: "form-control datetime-picker end-time rounded-3 px-4 py-3 fs-5", placeholder: "Select end time" } %>
+      </div>
 
-  <div class="form-actions">
-    <%= f.submit "Save Event", class: "btn btn-primary" %>
+      <div class="mb-4">
+        <%= f.input :venue_id, collection: Venue.all.pluck(:name, :id), prompt: "Select a Venue", label: "Venue", input_html: { class: "form-select rounded-3 px-4 py-3 fs-5" } %>
+      </div>
+
+      <div class="mb-4">
+        <%= f.label :resources, "Upload Resources (PDFs, Images, etc.)", class: "form-label fs-5 mb-2" %>
+        <%= f.file_field :resources, multiple: true, class: "form-control rounded-3 fs-5" %>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center mt-4">
+        <%= f.submit "Save Event", class: "btn text-white fs-5 px-4 py-2", style: "background-color: #d69550; border-radius: 8px;" %>
+        <%= link_to "Back to Events", organizer_dashboard_path, class: "btn btn-outline-secondary fs-5 px-4 py-2" %>
+      </div>
+
+    <% end %>
+
   </div>
-<% end %>
+</div>
