@@ -4,4 +4,5 @@ class Organization < ApplicationRecord
     validates :phone, format: { with: /\A\+?[0-9]{10,15}\z/, message: "must be a valid phone number" }, allow_blank: true
 
     has_many :users
+    has_many :venues
 end
