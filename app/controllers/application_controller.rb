@@ -3,7 +3,6 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :sign_out_on_public_pages
 
   def after_sign_in_path_for(_resource)
     dashboard_path_for(_resource)
@@ -23,6 +22,8 @@ class ApplicationController < ActionController::Base
     case resource
     when AttendeeUser
       attendee_dashboard_path
+    when ExecutiveUser
+      executive_dashboard_path
     when OrganizerUser
       organizer_dashboard_path
     when AdminUser
@@ -32,18 +33,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
-
-  def sign_out_on_public_pages
-    public_pages = [ about_path, root_path ]
-
-    return unless user_signed_in? && public_pages.include?(request.path)
-
-    sign_out(current_user)
-    redirect_to root_path, alert: "You have been signed out."
-  end
-
   def configure_permitted_parameters
-    added_attrs = [:username, :email, :password, :password_confirmation, :first_name, :last_name, :type, :attendee_type]
+    added_attrs = [ :username, :email, :password, :password_confirmation, :first_name, :last_name, :type, :attendee_type ]
     devise_parameter_sanitizer.permit(:sign_up, keys: added_attrs)
     devise_parameter_sanitizer.permit(:account_update, keys: added_attrs)
   end
