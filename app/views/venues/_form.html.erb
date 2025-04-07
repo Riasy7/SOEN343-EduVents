@@ -1,64 +1,70 @@
-<%= form_with(model: venue, local: true) do |form| %>
-<% if venue.errors.any? %>
-<div id="error_explanation">
-  <h2><%= pluralize(venue.errors.count, "error") %> prohibited this venue from being saved:</h2>
-  <ul>
-    <% venue.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-    <% end %>
-  </ul>
-</div>
-<% end %>
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <%= form_with(model: venue, local: true, html: { class: "needs-validation" }) do |form| %>
+      <% if venue.errors.any? %>
+      <div id="error_explanation" class="alert alert-danger">
+        <h2><%= pluralize(venue.errors.count, "error") %> prohibited this venue from being saved:</h2>
+        <ul>
+          <% venue.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+      <% end %>
 
-<div class="field">
-  <%= form.label :name %>
-  <%= form.text_field :name %>
-</div>
+      <div class="mb-3">
+        <%= form.label :name, class: "form-label" %>
+        <%= form.text_field :name, class: "form-control" %>
+      </div>
 
-<div class="field">
-  <%= form.label :max_capacity %>
-  <%= form.number_field :max_capacity, in: 1.0..100000.0, step: 1 %>
-</div>
+      <div class="mb-3">
+        <%= form.label :max_capacity, class: "form-label" %>
+        <%= form.number_field :max_capacity, in: 1.0..100000.0, step: 1, class: "form-control" %>
+      </div>
 
-<h3>Location</h3>
-<%= form.fields_for :location do |loc_form| %>
-<div class="field">
-  <%= loc_form.label :name, "Location Name" %>
-  <%= loc_form.text_field :name %>
-</div>
+      <h3>Location</h3>
+      <%= form.fields_for :location do |loc_form| %>
+      <div class="mb-3">
+        <%= loc_form.label :name, "Location Name", class: "form-label" %>
+        <%= loc_form.text_field :name, class: "form-control" %>
+      </div>
 
-<div class="field">
-  <%= loc_form.label :address1, "Address Line 1" %>
-  <%= loc_form.text_field :address1 %>
-</div>
+      <div class="mb-3">
+        <%= loc_form.label :address1, "Address Line 1", class: "form-label" %>
+        <%= loc_form.text_field :address1, class: "form-control" %>
+      </div>
 
-<div class="field">
-  <%= loc_form.label :address2, "Address Line 2" %>
-  <%= loc_form.text_field :address2 %>
-</div>
+      <div class="mb-3">
+        <%= loc_form.label :address2, "Address Line 2", class: "form-label" %>
+        <%= loc_form.text_field :address2, class: "form-control" %>
+      </div>
 
-<div class="field">
-  <%= loc_form.label :city %>
-  <%= loc_form.text_field :city %>
-</div>
+      <div class="mb-3">
+        <%= loc_form.label :city, class: "form-label" %>
+        <%= loc_form.text_field :city, class: "form-control" %>
+      </div>
 
-<div class="field">
-  <%= loc_form.label :state %>
-  <%= loc_form.text_field :state %>
-</div>
+      <div class="mb-3">
+        <%= loc_form.label :state, class: "form-label" %>
+        <%= loc_form.text_field :state, class: "form-control" %>
+      </div>
 
-<div class="field">
-  <%= loc_form.label :country %>
-  <%= loc_form.text_field :country %>
-</div>
+      <div class="mb-3">
+        <%= loc_form.label :country, class: "form-label" %>
+        <%= loc_form.text_field :country, class: "form-control" %>
+      </div>
 
-<div class="field">
-  <%= loc_form.label :postal_code %>
-  <%= loc_form.text_field :postal_code %>
-</div>
-<% end %>
+      <div class="mb-3">
+        <%= loc_form.label :postal_code, class: "form-label" %>
+        <%= loc_form.text_field :postal_code, class: "form-control" %>
+      </div>
+      <% end %>
 
-<div class="actions">
-  <%= form.submit %>
+      <div class="actions">
+        <%= form.submit "Submit", class: "btn btn-primary" %>
+      </div>
+      <% end %>
+    </div>
+  </div>
 </div>
-<% end %>

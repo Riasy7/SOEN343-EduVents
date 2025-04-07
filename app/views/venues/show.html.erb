@@ -1,23 +1,29 @@
-<h1>Venue Details</h1>
-
-<p>
-  <strong>Name:</strong>
-  <%= @venue.name %>
-</p>
-
-<p>
-  <strong>Max capacity:</strong>
-  <%= @venue.max_capacity %>
-</p>
-
-<p>
-  <strong>Address:</strong>
-  <%= @venue.location.get_full_address %>
-</p>
-
-<%= link_to 'Edit', edit_venue_path(@venue) %> |
-<% if current_user.is_a?(AdminUser) %>
-<%= link_to 'Back', venues_path %>
-<% elsif current_user.is_a?(ExecutiveUser) %>
-<%= link_to 'Back', executive_dashboard_venues_path %>
-<% end %>
+<div class="container my-5">
+  <div class="mb-4 text-center">
+    <h1 class="display-4" style="color: #E8923C;">Venue Details</h1>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="mb-3">
+        <strong>Name:</strong>
+        <span class="ms-2"><%= @venue.name %></span>
+      </div>
+      <div class="mb-3">
+        <strong>Max capacity:</strong>
+        <span class="ms-2"><%= @venue.max_capacity %></span>
+      </div>
+      <div class="mb-3">
+        <strong>Address:</strong>
+        <span class="ms-2"><%= @venue.location.get_full_address %></span>
+      </div>
+      <div class="mt-4">
+        <%= link_to 'Edit', edit_venue_path(@venue), class: "btn me-2", style: "background-color: #E8923C; border-color: #E8923C; color: white;" %>
+        <% if current_user.is_a?(AdminUser) %>
+        <%= link_to 'Back', venues_path, class: "btn btn-secondary" %>
+        <% elsif current_user.is_a?(ExecutiveUser) %>
+        <%= link_to 'Back', executive_dashboard_venues_path, class: "btn btn-secondary" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
