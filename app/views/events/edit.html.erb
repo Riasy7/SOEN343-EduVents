@@ -1,11 +1,1 @@
-<h1>Edit Event</h1>
-
-<%= render 'form' %>
-
-<% if current_user.is_a?(AdminUser) %>
-    <%= link_to "Back to Events", events_path, class: "btn btn-secondary" %>
-<% end %>
-
-<% if current_user.is_a?(OrganizerUser) || current_user.is_a?(ExecutiveUser) %>
-    <%= link_to "Back to Dashboard", organizer_dashboard_path, class: "btn btn-secondary" %>
-<% end %>
+<%= render 'form', action: "Edit" %>

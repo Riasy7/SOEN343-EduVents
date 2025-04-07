@@ -1,43 +1,47 @@
 <div class="container py-5 d-flex justify-content-center">
   <div class="col-lg-7 col-xl-6 bg-white p-5 rounded-4 shadow border border-light" style="max-width: 720px;">
 
-    <h2 class="text-center fw-bold mb-5" style="font-size: 2rem;">Create a New Event</h2>
+    <h2 class="text-center fw-bold mb-5" style="font-size: 2rem;"><%= action %> Event</h2>
 
     <%= simple_form_for @event, html: { multipart: true, class: "form-wrapper" } do |f| %>
 
-      <div class="mb-4">
-        <%= f.input :name, label: "Event Name", input_html: { class: "form-control rounded-3 px-4 py-3 fs-5" } %>
-      </div>
+    <div class="mb-4">
+      <%= f.input :name, label: "Event Name", input_html: { class: "form-control rounded-3 px-4 py-3 fs-5" } %>
+    </div>
 
-      <div class="mb-4">
-        <%= f.input :event_type, collection: %w[conference workshop seminar competition other], prompt: "Select Event Type", label: "Event Type", input_html: { class: "form-select rounded-3 px-4 py-3 fs-5" } %>
-      </div>
+    <div class="mb-4">
+      <%= f.input :event_type, collection: %w[conference workshop seminar competition other], prompt: "Select Event Type", label: "Event Type", input_html: { class: "form-select rounded-3 px-4 py-3 fs-5" } %>
+    </div>
 
-      <div class="mb-4">
-        <%= f.input :category, label: "Category (e.g. Computer Science, Environment)", input_html: { class: "form-control rounded-3 px-4 py-3 fs-5" } %>
-      </div>
+    <div class="mb-4">
+      <%= f.input :category, label: "Category (e.g. Computer Science, Environment)", input_html: { class: "form-control rounded-3 px-4 py-3 fs-5" } %>
+    </div>
 
-      <div class="mb-4">
-        <%= f.input :start_time, as: :string, label: "Start Time", input_html: { class: "form-control datetime-picker start-time rounded-3 px-4 py-3 fs-5", placeholder: "Select start time" } %>
-      </div>
+    <div class="mb-4">
+      <%= f.input :start_time, as: :string, label: "Start Time", input_html: { class: "form-control datetime-picker start-time rounded-3 px-4 py-3 fs-5", placeholder: "Select start time" } %>
+    </div>
 
-      <div class="mb-4">
-        <%= f.input :end_time, as: :string, label: "End Time", input_html: { class: "form-control datetime-picker end-time rounded-3 px-4 py-3 fs-5", placeholder: "Select end time" } %>
-      </div>
+    <div class="mb-4">
+      <%= f.input :end_time, as: :string, label: "End Time", input_html: { class: "form-control datetime-picker end-time rounded-3 px-4 py-3 fs-5", placeholder: "Select end time" } %>
+    </div>
 
-      <div class="mb-4">
-        <%= f.input :venue_id, collection: Venue.all.pluck(:name, :id), prompt: "Select a Venue", label: "Venue", input_html: { class: "form-select rounded-3 px-4 py-3 fs-5" } %>
-      </div>
+    <div class="mb-4">
+      <%= f.input :venue_id, collection: Venue.all.pluck(:name, :id), prompt: "Select a Venue", label: "Venue", input_html: { class: "form-select rounded-3 px-4 py-3 fs-5" } %>
+    </div>
 
-      <div class="mb-4">
-        <%= f.label :resources, "Upload Resources (PDFs, Images, etc.)", class: "form-label fs-5 mb-2" %>
-        <%= f.file_field :resources, multiple: true, class: "form-control rounded-3 fs-5" %>
-      </div>
+    <div class="mb-4">
+      <%= f.label :resources, "Upload Resources (PDFs, Images, etc.)", class: "form-label fs-5 mb-2" %>
+      <%= f.file_field :resources, multiple: true, class: "form-control rounded-3 fs-5" %>
+    </div>
 
-      <div class="d-flex justify-content-between align-items-center mt-4">
-        <%= f.submit "Save Event", class: "btn text-white fs-5 px-4 py-2", style: "background-color: #d69550; border-radius: 8px;" %>
-        <%= link_to "Back to Events", organizer_dashboard_path, class: "btn btn-outline-secondary fs-5 px-4 py-2" %>
-      </div>
+    <div class="d-flex justify-content-between align-items-center mt-4">
+      <%= f.submit "Save Event", class: "btn text-white fs-5 px-4 py-2", style: "background-color: #d69550; border-radius: 8px;" %>
+      <% if current_user.is_a?(AdminUser) %>
+      <%= link_to "Back to Events", events_path, class: "btn btn-secondary" %>
+      <% elsif current_user.is_a?(OrganizerUser) %>
+      <%= link_to "Back to Dashboard", organizer_dashboard_path, class: "btn btn-secondary" %>
+      <% end %>
+    </div>
 
     <% end %>
 
