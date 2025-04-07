@@ -1,0 +1,8 @@
+<h1>New Message Notification</h1>
+<p>Hello <%= @message.receiver.get_full_name %>,</p>
+<p>You have received a new message from <%= @message.sender.get_full_name %>:</p>
+<blockquote>
+  <p><%= @message.content %></p>
+</blockquote>
+<p>To reply, please visit the event messaging page.</p>
+<p>Thank you,<br>The EduVents Team</p>
