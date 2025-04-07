@@ -1,0 +1,23 @@
+<h1>Manage Venues</h1>
+<div class="row">
+  <div class="col-lg-8 offset-lg-2">
+    <div class="list-group">
+      <% @venues.each do |venue| %>
+      <div class="list-group-item d-flex justify-content-between align-items-center mb-3">
+        <div>
+          <h5 class="mb-1"><%= venue.name %></h5>
+          <p class="mb-1">Max capacity: <%= venue.max_capacity %></p>
+          <small class="text-muted">
+            <i class="fa-solid fa-location-dot" style="color: #e60a0a;"></i>
+            <%= venue.location.get_full_address %>
+          </small>
+        </div>
+        <div>
+          <%= link_to "Edit", edit_venue_path(venue), class: 'btn btn-primary' %>
+        </div>
+      </div>
+      <% end %>
+    </div>
+    <%= link_to "Create a new venue", new_venue_path, class: 'btn btn-primary' %>
+  </div>
+</div>

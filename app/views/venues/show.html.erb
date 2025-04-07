@@ -1,0 +1,23 @@
+<h1>Venue Details</h1>
+
+<p>
+  <strong>Name:</strong>
+  <%= @venue.name %>
+</p>
+
+<p>
+  <strong>Max capacity:</strong>
+  <%= @venue.max_capacity %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @venue.location.get_full_address %>
+</p>
+
+<%= link_to 'Edit', edit_venue_path(@venue) %> |
+<% if current_user.is_a?(AdminUser) %>
+<%= link_to 'Back', venues_path %>
+<% elsif current_user.is_a?(ExecutiveUser) %>
+<%= link_to 'Back', executive_dashboard_venues_path %>
+<% end %>

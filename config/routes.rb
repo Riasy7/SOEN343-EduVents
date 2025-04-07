@@ -23,6 +23,8 @@ Rails.application.routes.draw do
   end
   resources :events
 
+  resources :venues
+
   # stripe checkout routes
   resources :checkouts, only: [ :create ] do
     collection do

@@ -6,6 +6,7 @@ class ExecutiveDashboardController < ApplicationController
   end
 
   def venues
+    @venues = current_user.organization.venues
   end
 
   private
