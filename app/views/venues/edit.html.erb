@@ -1,0 +1,9 @@
+<h1>Edit Venue</h1>
+
+<%= render 'form', venue: @venue %>
+
+<% if current_user.is_a?(AdminUser) %>
+<%= link_to 'Back', venues_path %>
+<% elsif current_user.is_a?(ExecutiveUser) %>
+<%= link_to 'Back', executive_dashboard_venues_path %>
+<% end %>

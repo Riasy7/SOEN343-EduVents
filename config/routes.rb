@@ -4,7 +4,10 @@ Rails.application.routes.draw do
 
   get "about" => "home#about"
   root "home#index"
-  
+
+  get "executive_dashboard", to: "executive_dashboard#index"
+  get "executive_dashboard/venues", to: "executive_dashboard#venues"
+
   get "organizer_dashboard", to: "organizer_dashboard#index"
 
   get "attendee_dashboard", to: "attendee_dashboard#index"
@@ -20,8 +23,10 @@ Rails.application.routes.draw do
   end
   resources :events
 
+  resources :venues
+
   # stripe checkout routes
-  resources :checkouts, only: [:create] do
+  resources :checkouts, only: [ :create ] do
     collection do
       get :success
       get :cancel
@@ -30,6 +35,6 @@ Rails.application.routes.draw do
 
   # payment history routes
   resources :users do
-    resources :payments, only: [:index]
+    resources :payments, only: [ :index ]
   end
 end
