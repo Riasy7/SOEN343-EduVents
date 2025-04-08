@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_07_150255) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_07_182551) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -82,6 +82,27 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_07_150255) do
     t.index ["venue_id"], name: "index_locations_on_venue_id"
   end
 
+  create_table "messages", force: :cascade do |t|
+    t.text "content", null: false
+    t.bigint "sender_id", null: false
+    t.bigint "receiver_id", null: false
+    t.bigint "event_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_messages_on_event_id"
+    t.index ["receiver_id"], name: "index_messages_on_receiver_id"
+    t.index ["sender_id"], name: "index_messages_on_sender_id"
+  end
+
+  create_table "notification_preferences", force: :cascade do |t|
+    t.bigint "user_id"
+    t.boolean "email_enabled"
+    t.boolean "sms_enabled"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_notification_preferences_on_user_id"
+  end
+
   create_table "notification_preferences", force: :cascade do |t|
     t.bigint "user_id"
     t.boolean "email_enabled"
@@ -149,6 +170,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_07_150255) do
   add_foreign_key "events", "users", column: "organizer_id"
   add_foreign_key "events", "venues"
   add_foreign_key "locations", "venues"
+  add_foreign_key "messages", "events"
+  add_foreign_key "messages", "users", column: "receiver_id"
+  add_foreign_key "messages", "users", column: "sender_id"
+  add_foreign_key "notification_preferences", "users"
   add_foreign_key "notification_preferences", "users"
   add_foreign_key "payments", "events"
   add_foreign_key "payments", "users"

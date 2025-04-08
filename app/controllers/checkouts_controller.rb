@@ -63,7 +63,7 @@ class CheckoutsController < ApplicationController
 
     event_registration = EventRegistration.create!(attendee_id: attendee.id, event_id: event.id, role: role)
 
-    EventRegistrationMailer.registration_confirmation(event_registration).deliver_later
+    NotificationService.call(event_registration.attendee, :event_registration_confirmation, event_registration)
     PaymentMailer.payment_success(payment).deliver_now
 
     flash[:notice] = "Payment successful! You are now registered for the event."
