@@ -1,0 +1,9 @@
+<p>Hello <%= @message.receiver.get_full_name %>,</p>
+<p>You have received a new message from <%= @message.sender.get_full_name %>:</p>
+<blockquote>
+  <p><%= @message.content %></p>
+</blockquote>
+<p>To reply, please visit the event messaging page.</p>
+<div class="d-grid gap-2 col-6 mx-auto my-4">
+  <%= link_to "Sign in", new_user_session_path, class: "btn btn-lg", style: "background-color: #E8923C" %>
+</div>
