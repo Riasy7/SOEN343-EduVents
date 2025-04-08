@@ -4,4 +4,6 @@
   <p><%= @message.content %></p>
 </blockquote>
 <p>To reply, please visit the event messaging page.</p>
-<p>Thank you,<br>The EduVents Team</p>
+<div class="d-grid gap-2 col-6 mx-auto my-4">
+  <%= link_to "Sign in", new_user_session_path, class: "btn btn-lg", style: "background-color: #E8923C" %>
+</div>

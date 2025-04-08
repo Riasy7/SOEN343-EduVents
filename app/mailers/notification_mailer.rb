@@ -1,4 +1,6 @@
 class NotificationMailer < ApplicationMailer
+  layout "notification_mailer"
+
   def event_registration_confirmation(attendee, event_registration)
     @attendee = attendee
     @event_registration = event_registration
@@ -18,6 +20,7 @@ class NotificationMailer < ApplicationMailer
 
   def new_event_message(user, message)
     @message = message
-    mail(to: user.email, subject: "New Message for #{@message.event.name}")
+    @title = "New Message for #{@message.event.name}"
+    mail(to: user.email, subject: "New Message Notification")
   end
 end
