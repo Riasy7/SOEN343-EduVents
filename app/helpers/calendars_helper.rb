@@ -1,7 +1,7 @@
 module CalendarsHelper
   def calendar_event_style(event, hour_start, hour_end)
-    event_start = event.start_time.to_time
-    event_end   = event.end_time.to_time
+    event_start = event.start_time.in_time_zone
+    event_end   = event.end_time.in_time_zone
 
     block_minutes = (hour_end - hour_start) / 60
 

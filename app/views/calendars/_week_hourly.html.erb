@@ -21,7 +21,7 @@
     </div>
 
     <% week_days.each do |day| %>
-    <% day_start = day.to_time.change(hour: hour) %>
+    <% day_start = day.in_time_zone.change(hour: hour) %>
     <% day_end   = day_start + 1.hour %>
 
     <% hour_events = events.select do |event|
@@ -31,7 +31,6 @@
     <div class="sc-col sc-day-hour">
       <% hour_events.each do |event| %>
       <div class="sc-event-block" style="<%= calendar_event_style(event, day_start, day_end) %>">
-        <%= event.title %>
       </div>
       <% end %>
     </div>

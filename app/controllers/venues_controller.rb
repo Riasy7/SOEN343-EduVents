@@ -58,15 +58,14 @@ class VenuesController < ApplicationController
       OpenStruct.new(
         start_time: DateTime.parse(s["start_time"]),
         end_time: DateTime.parse(s["end_time"]),
-        title: "Available"
       )
     end
   end
 
   def add_schedule
     new_schedule = {
-      "start_time" => DateTime.parse(params[:schedule_start_time]),
-      "end_time"   => DateTime.parse(params[:schedule_end_time])
+      "start_time" => Time.zone.parse(params[:schedule_start_time]),
+      "end_time"   => Time.zone.parse(params[:schedule_end_time])
     }
 
     schedules = @venue.schedule || []
@@ -77,7 +76,6 @@ class VenuesController < ApplicationController
         OpenStruct.new(
           start_time: s["start_time"],
           end_time: s["end_time"],
-          title: "Available"
       )
       end
 
@@ -96,7 +94,7 @@ class VenuesController < ApplicationController
   def reset_schedule
     @venue.schedule = nil
     if @venue.save!
-      redirect_to @venue, warning: "Schedule was reset."
+      redirect_to @venue, notice: "Schedule was reset."
     else
       redirect_to edit_schedule_venues_path, alert: "Error resetting schedule."
     end
