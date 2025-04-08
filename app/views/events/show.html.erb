@@ -41,5 +41,6 @@
 <%= link_to "Edit Event", edit_event_path(@event), class: "btn btn-primary" %>
 <%= link_to "Delete", event_path(@event), method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-danger" %>
 <% end %>
-
-<%= link_to "Back to Events", attendee_dashboard_events_path, class: "btn btn-secondary" %>
+<% if current_user.is_a?(OrganizerUser)%>
+<%= link_to "Back to Events", organizer_dashboard_path, class: "btn btn-secondary" %>
+<%end%>

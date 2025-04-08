@@ -1,32 +1,98 @@
 <h1>Browse Events</h1>
 <div class="row">
-    <div class="col-lg-8 offset-lg-2">
-        <div class="list-group">
-            <% @events.each do |event| %>
-            <div class="list-group-item d-flex justify-content-between align-items-center mb-3">
-                <div>
-                    <h5 class="mb-1"><%= event.name %></h5>
-                    <p class="mb-1"><%= event.description %></p>
-                    <p><%= event.price_cents > 0.0 ? "#{number_to_currency(event.price_cents / 100.0)}" : "Free" %></p>
-                    <small class="text-muted"><%= event.event_type.capitalize %></small><br />
-                    <small class="text-muted">
-                        <i class="fa-solid fa-calendar-days" style="color: #E8923C;"></i>
-                        <%= event.start_time.strftime("%B %d, %Y %I:%M %p") %> -
-                        <%= event.end_time.strftime("%B %d, %Y %I:%M %p") %>
-                    </small><br />
-                    <small class="text-muted">
-                        <i class="fa-solid fa-location-dot" style="color: #e60a0a;"></i>
-                        <%= event.venue.location.get_full_address %>
-                    </small>
+  <div class="col-lg-8 offset-lg-2">
+    <div class="list-group">
+        <%= form_with url: search_events_path, method: :get, local: true, class: "mb-4" do |form| %>
+            <div class="row g-3 align-items-end mb-4">
+                <div class="col-md-5">
+                <%= form.label :query, "Search Events", class: "form-label" %>
+                <%= form.text_field :query, placeholder: "Search by name, location, or organizer", class: "form-control form-control-lg", value: params[:query] %>
                 </div>
-                <div>
-                    <%= link_to "Register as listener", register_as_listener_event_path(event), class: 'btn btn-primary', method: :post, data: { turbo_method: :post } %>
-                    <% if current_user.attendee_type == "speaker" %>
-                    <%= link_to "Register as speaker", register_as_speaker_event_path(event), class: 'btn btn-secondary', method: :post, data: { turbo_method: :post } %>
-                    <% end %>
+
+                <div class="col-md-2">
+                <%= form.label :min_price, "Min Price ($)", class: "form-label" %>
+                <%= form.range_field :min_price, min: 0, max: 500, step: 1, value: params[:min_price] || 0, class: "form-range", id: "min_price_slider" %>
+                <div class="text-center"><span id="min_price_display"><%= params[:min_price] || 0 %></span></div>
+                </div>
+
+                <div class="col-md-2">
+                <%= form.label :max_price, "Max Price ($)", class: "form-label" %>
+                <%= form.range_field :max_price, min: 0, max: 500, step: 1, value: params[:max_price] || 500, class: "form-range", id: "max_price_slider" %>
+                <div class="text-center"><span id="max_price_display"><%= params[:max_price] || 500 %></span></div>
+                </div>
+
+                <div class="col-md-2">
+                <%= form.label :event_type, "Event Type", class: "form-label" %>
+                <%= form.select :event_type,
+                    options_for_select(["", "conference", "workshop", "seminar", "competition", "other"], selected: params[:event_type]),
+                    {}, class: "form-select" %>
+                </div>
+
+                <div class="col-md-2">
+                <%= form.label :sort_by, "Sort By", class: "form-label" %>
+                <%= form.select :sort_by,
+                    options_for_select([
+                        ["", ""],
+                        ["Price: Low to High", "price"],
+                        ["Date: Newest to Oldest", "date"]
+                    ], selected: params[:sort_by]),
+                    {}, class: "form-select" %>
+                </div>
+
+                <div class="col-md-1 d-grid">
+                <%= form.submit "Search", class: "btn btn-outline-primary" %>
                 </div>
             </div>
+        <% end %>
+
+
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const minSlider = document.getElementById("min_price_slider");
+            const maxSlider = document.getElementById("max_price_slider");
+
+            if (minSlider) {
+            minSlider.addEventListener("input", () => {
+                document.getElementById("min_price_display").textContent = minSlider.value;
+            });
+            }
+
+            if (maxSlider) {
+            maxSlider.addEventListener("input", () => {
+                document.getElementById("max_price_display").textContent = maxSlider.value;
+            });
+            }
+        });
+        </script>
+
+
+      <% @events.each do |event| %>
+        <div class="list-group-item d-flex justify-content-between align-items-center mb-3">
+          <div>
+            <h5 class="mb-1"><%= event.name %></h5>
+            <p class="mb-1"><%= event.description %></p>
+            <p><%= (event.price_cents || 0) > 0.0 ? number_to_currency(event.price_cents.to_f / 100.0) : "Free" %></p>
+            <small class="text-muted"><%= event.event_type.capitalize %></small><br />
+            <small class="text-muted">
+              <i class="fa-solid fa-calendar-days" style="color: #E8923C;"></i>
+              <%= event.start_time.strftime("%B %d, %Y %I:%M %p") %> -
+              <%= event.end_time.strftime("%B %d, %Y %I:%M %p") %>
+            </small><br />
+            <% if event.venue&.location %>
+              <small class="text-muted">
+                <i class="fa-solid fa-location-dot" style="color: #e60a0a;"></i>
+                <%= event.venue.location.get_full_address %>
+              </small>
             <% end %>
+          </div>
+          <div>
+            <%= link_to "Register as listener", register_as_listener_event_path(event), class: 'btn btn-primary', method: :post, data: { turbo_method: :post } %>
+            <% if current_user.attendee_type == "speaker" %>
+              <%= link_to "Register as speaker", register_as_speaker_event_path(event), class: 'btn btn-secondary', method: :post, data: { turbo_method: :post } %>
+            <% end %>
+          </div>
         </div>
+      <% end %>
     </div>
+  </div>
 </div>

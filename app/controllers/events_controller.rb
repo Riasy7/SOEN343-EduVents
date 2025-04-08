@@ -11,7 +11,7 @@ class EventsController < ApplicationController
 
   def show
     # @event is set in before_action
-  end  
+  end
 
   def new
     @event = Event.new
@@ -50,6 +50,51 @@ class EventsController < ApplicationController
     else
       redirect_to organizer_dashboard_path, alert: "Error: Unable to delete event."
     end
+  end
+
+  def search
+    @events = []
+
+    if params[:query].present?
+      query = params[:query].downcase
+
+      pg_results = Event.search_by_attributes(query)
+
+      manual_results = Event.all.select do |event|
+        event.full_venue_address.downcase.include?(query)
+      end
+
+      @events = (pg_results + manual_results).uniq
+    else
+      @events = Event.all
+    end
+
+    # Filter by price range
+    min_price = params[:min_price].to_i * 100
+    max_price = params[:max_price].to_i * 100 if params[:max_price].present?
+
+    @events = @events.select do |event|
+      price = event.price_cents || 0
+      price >= min_price && (max_price.nil? || price <= max_price)
+    end
+
+    # Filter by event type
+    if params[:event_type].present?
+      @events = @events.select do |event|
+        event.event_type == params[:event_type]
+      end
+    end
+
+    if params[:sort_by].present?
+      case params[:sort_by]
+      when "price"
+        @events = @events.sort_by { |e| e.price_cents || 0 }
+      when "date"
+        @events = @events.sort_by { |e| e.start_time }.reverse
+      end
+    end
+    
+    render "attendee_dashboard/browse_events"
   end
 
   private
