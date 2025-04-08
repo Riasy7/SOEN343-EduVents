@@ -1,0 +1,41 @@
+<% start_date = local_assigns[:calendar].options[:start_date] ? local_assigns[:calendar].options[:start_date].to_date.beginning_of_week : Date.today.beginning_of_week %>
+<% end_date = start_date.end_of_week %>
+<% week_days = (start_date..end_date).to_a %>
+<% events = local_assigns[:calendar].options[:events] || [] %>
+
+<div class="simple-calendar full-day-weekly">
+  <div class="row mb-3 align-items-center">
+    <div class="col-auto"></div>
+    <% week_days.each do |day| %>
+    <div class="col text-center">
+      <strong><%= day.strftime("%A, %b %d") %></strong>
+    </div>
+    <% end %>
+  </div>
+
+  <div class="row">
+    <div class="col-auto" style="position: relative;">
+      <div class="time-axis" style="height: 768px; position: relative;">
+        <% 0.upto(23) do |hour| %>
+        <div class="time-label" style="height: 32px; border-bottom: 1px solid #ddd; padding: 0 5px;">
+          <small><%= "%02d:00" % hour %></small>
+        </div>
+        <% end %>
+      </div>
+    </div>
+
+    <% week_days.each do |day| %>
+    <div class="col position-relative p-1" style="border: 1px solid #ddd;">
+      <div class="day-container position-relative" style="height: 768px; background: #f9f9f9; overflow: hidden;">
+        <% day_start = day.beginning_of_day.to_time %>
+        <% day_events = events.select { |e| e.start_time.to_time >= day_start && e.start_time.to_time < day_start + 1.day } %>
+        <% day_events.each do |event| %>
+        <div class="sc-event-block text-center text-white rounded" style="<%= calendar_event_full_day_style(event, day_start) %> background-color: #E8923C;">
+          <small><%= event.name %></small>
+        </div>
+        <% end %>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>

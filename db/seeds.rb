@@ -39,8 +39,21 @@ events = [
   { name: "Product Management Insights", event_type: "seminar" }
 ]
 
+# Starting at 8 AM today (adjust as needed)
+current_start_time = DateTime.now.beginning_of_day + 8.hours
+
 events.each do |event_data|
-  event = Event.create!(name: event_data[:name], event_type: event_data[:event_type], organizer_id: organizer.id, venue_id: venue.id, start_time: Date.today, end_time: Date.tomorrow, price_cents: 1500)
+  duration_hours = rand(2..6)
+  start_time = current_start_time
+  end_time = start_time + duration_hours.hours
+
+  gap_hours = rand * (2.0 - 0.5) + 0.5
+  current_start_time = end_time + gap_hours.hours
+
+  price_cents = rand(1000..10000)
+
+  event = Event.create!(name: event_data[:name], event_type: event_data[:event_type], organizer_id: organizer.id, venue_id: venue.id, start_time: start_time, end_time: end_time, price_cents: price_cents)
+
   EventRegistration.create!(event_id: event.id, attendee_id: listener.id, role: "listener") if rand(2) == 1
   EventRegistration.create!(event_id: event.id, attendee_id: speaker.id, role: "speaker") if rand(2) == 1
 end
