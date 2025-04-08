@@ -1,5 +1,10 @@
 class Event < ApplicationRecord
   include PgSearch::Model
+    has_many :event_registrations, dependent: :destroy # this deletes all event registrations upon event.destroy
+    has_many :attendees, through: :event_registrations, source: :attendee
+    has_many :payments, dependent: :destroy
+    has_many :ratings, dependent: :destroy
+    has_many_attached :resources
 
   pg_search_scope :search_by_attributes,
   against: :name,
@@ -31,7 +36,7 @@ class Event < ApplicationRecord
 
   def full_venue_address
     return "" unless venue&.location
-  
+
     [
       venue.location.address1,
       venue.location.address2,
@@ -41,12 +46,16 @@ class Event < ApplicationRecord
       venue.location.country
     ].compact.join(" ")
   end
-  
-  
+
+
 
   def end_time_after_start_time
     if start_time.present? && end_time.present? && end_time < start_time
       errors.add(:end_time, "must be after the start time")
     end
+  end
+
+  def average_rating
+    ratings.average(:rating).to_f.round(2)
   end
 end

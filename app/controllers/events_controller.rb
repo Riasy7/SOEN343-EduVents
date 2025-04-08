@@ -1,9 +1,9 @@
 class EventsController < ApplicationController
   before_action :authenticate_user!
-  before_action :authorize_event_manager!, only: [:new, :create, :edit, :update, :destroy]
-  before_action :authorize_admin!, only: [:index]
-  before_action :set_event, only: [:show, :edit, :update, :destroy]
-  before_action :authorize_event_owner!, only: [:edit, :update, :destroy]
+  before_action :authorize_event_manager!, only: [ :new, :create, :edit, :update, :destroy ]
+  before_action :authorize_admin!, only: [ :index ]
+  before_action :set_event, only: [ :show, :edit, :update, :destroy, :rate ]
+  before_action :authorize_event_owner!, only: [ :edit, :update, :destroy ]
 
   def index
     @events = Event.all
@@ -93,8 +93,23 @@ class EventsController < ApplicationController
         @events = @events.sort_by { |e| e.start_time }.reverse
       end
     end
-    
+
     render "attendee_dashboard/browse_events"
+  end
+
+  def rate
+    unless current_user.is_a?(AttendeeUser)
+      redirect_to @event, alert: "Only attendees can rate events." and return
+    end
+
+    rating = @event.ratings.find_or_initialize_by(attendee: current_user)
+    rating.rating = params[:rating]
+
+    if rating.save
+      redirect_to @event, notice: "Thank you for rating this event!"
+    else
+      redirect_to @event, alert: "Unable to save your rating. #{rating.errors.full_messages.to_sentence}"
+    end
   end
 
   private

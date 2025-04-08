@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     member do
       post :register_as_listener, to: "event_registration#register_as_listener"
       post :register_as_speaker, to: "event_registration#register_as_speaker"
+      post :rate, to: "events#rate"
     end
     # nested inside of events
     resources :messages, only: [:index, :create]

@@ -12,8 +12,8 @@
 
   <%= javascript_importmap_tags %>
   <%= javascript_include_tag "application", "data-turbo-track": "reload" %>
-  <%= javascript_include_tag "application", type: "module", "data-turbo-track": "reload" %>
   <%= javascript_include_tag "rails-ujs" %>
+  <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
 
   <link rel="icon" href="/icon.png" type="image/png">
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
@@ -31,6 +31,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
 </head>
 
 <body>

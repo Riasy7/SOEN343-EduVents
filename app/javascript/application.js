@@ -8,6 +8,8 @@
 import "@hotwired/turbo-rails";
 import "controllers";
 import flatpickr from "flatpickr";
+import "chartkick";
+import "Chart.bundle";
 
 document.addEventListener("turbo:load", () => {
   flatpickr(".datetime-picker.start-time", {

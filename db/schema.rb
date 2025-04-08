@@ -1,4 +1,4 @@
-# This file is auto-generated from the current state of the database. Instead
+s# This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_07_182551) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_08_154237) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -20,8 +20,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_07_182551) do
     t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
-    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
-    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+    t.index [ "blob_id" ], name: "index_active_storage_attachments_on_blob_id"
+    t.index [ "record_type", "record_id", "name", "blob_id" ], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
   create_table "active_storage_blobs", force: :cascade do |t|
@@ -33,13 +33,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_07_182551) do
     t.bigint "byte_size", null: false
     t.string "checksum"
     t.datetime "created_at", null: false
-    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+    t.index [ "key" ], name: "index_active_storage_blobs_on_key", unique: true
   end
 
   create_table "active_storage_variant_records", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
-    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+    t.index [ "blob_id", "variation_digest" ], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
   create_table "event_registrations", force: :cascade do |t|
@@ -48,8 +48,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_07_182551) do
     t.string "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["attendee_id"], name: "index_event_registrations_on_attendee_id"
-    t.index ["event_id"], name: "index_event_registrations_on_event_id"
+    t.index [ "attendee_id" ], name: "index_event_registrations_on_attendee_id"
+    t.index [ "event_id" ], name: "index_event_registrations_on_event_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -65,7 +65,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_07_182551) do
     t.datetime "end_time"
     t.string "category"
     t.integer "price_cents"
-    t.index ["venue_id"], name: "index_events_on_venue_id"
+    t.index [ "venue_id" ], name: "index_events_on_venue_id"
   end
 
   create_table "locations", force: :cascade do |t|
@@ -79,7 +79,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_07_182551) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "venue_id"
-    t.index ["venue_id"], name: "index_locations_on_venue_id"
+    t.index [ "venue_id" ], name: "index_locations_on_venue_id"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -89,9 +89,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_07_182551) do
     t.bigint "event_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["event_id"], name: "index_messages_on_event_id"
-    t.index ["receiver_id"], name: "index_messages_on_receiver_id"
-    t.index ["sender_id"], name: "index_messages_on_sender_id"
+    t.index [ "event_id" ], name: "index_messages_on_event_id"
+    t.index [ "receiver_id" ], name: "index_messages_on_receiver_id"
+    t.index [ "sender_id" ], name: "index_messages_on_sender_id"
   end
 
   create_table "notification_preferences", force: :cascade do |t|
@@ -100,7 +100,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_07_182551) do
     t.boolean "sms_enabled"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_notification_preferences_on_user_id"
+    t.index [ "user_id" ], name: "index_notification_preferences_on_user_id"
   end
 
   create_table "organizations", force: :cascade do |t|
@@ -121,8 +121,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_07_182551) do
     t.string "stripe_charge_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["event_id"], name: "index_payments_on_event_id"
-    t.index ["user_id"], name: "index_payments_on_user_id"
+    t.index [ "event_id" ], name: "index_payments_on_event_id"
+    t.index [ "user_id" ], name: "index_payments_on_user_id"
+  end
+
+  create_table "ratings", force: :cascade do |t|
+    t.bigint "event_id", null: false
+    t.bigint "attendee_id", null: false
+    t.integer "rating", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index [ "attendee_id" ], name: "index_ratings_on_attendee_id"
+    t.index [ "event_id", "attendee_id" ], name: "index_ratings_on_event_id_and_attendee_id", unique: true
+    t.index [ "event_id" ], name: "index_ratings_on_event_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -139,10 +150,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_07_182551) do
     t.string "attendee_type"
     t.string "type"
     t.bigint "organization_id"
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["organization_id"], name: "index_users_on_organization_id"
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["username"], name: "index_users_on_username", unique: true
+    t.index [ "email" ], name: "index_users_on_email", unique: true
+    t.index [ "organization_id" ], name: "index_users_on_organization_id"
+    t.index [ "reset_password_token" ], name: "index_users_on_reset_password_token", unique: true
+    t.index [ "username" ], name: "index_users_on_username", unique: true
   end
 
   create_table "venues", force: :cascade do |t|
@@ -152,7 +163,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_07_182551) do
     t.datetime "updated_at", null: false
     t.bigint "organization_id"
     t.json "schedule"
-    t.index ["organization_id"], name: "index_venues_on_organization_id"
+    t.index [ "organization_id" ], name: "index_venues_on_organization_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -168,6 +179,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_07_182551) do
   add_foreign_key "notification_preferences", "users"
   add_foreign_key "payments", "events"
   add_foreign_key "payments", "users"
+  add_foreign_key "ratings", "events"
+  add_foreign_key "ratings", "users", column: "attendee_id"
   add_foreign_key "users", "organizations"
   add_foreign_key "venues", "organizations"
 end
