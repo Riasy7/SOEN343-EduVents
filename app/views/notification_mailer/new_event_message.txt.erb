@@ -1,0 +1,12 @@
+New Message Notification
+
+Hello <%= @message.receiver.get_full_name %>,
+
+You have received a new message from <%= @message.sender.get_full_name %>:
+
+"<%= @message.content %>"
+
+To reply, please visit the event messaging page.
+
+Thank you,
+The EduVents Team
