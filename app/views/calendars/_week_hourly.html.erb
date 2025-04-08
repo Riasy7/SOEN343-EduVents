@@ -1,0 +1,41 @@
+<% start_date = (local_assigns[:calendar].options[:start_date] || Time.zone.today).beginning_of_week %>
+<% end_date   = start_date.end_of_week %>
+<% week_days  = (start_date.to_date..end_date.to_date).to_a %>
+
+<% events = local_assigns[:calendar].options[:events] || [] %>
+
+<div class="sc weekly-hourly">
+  <div class="sc-row sc-week-header">
+    <div class="sc-col sc-hour-label"></div>
+    <% week_days.each do |day| %>
+    <div class="sc-col sc-day-header">
+      <%= day.strftime("%A, %b %d") %>
+    </div>
+    <% end %>
+  </div>
+
+  <% (0..23).each do |hour| %>
+  <div class="sc-row sc-hour-row">
+    <div class="sc-col sc-hour-label">
+      <%= "#{hour}:00" %>
+    </div>
+
+    <% week_days.each do |day| %>
+    <% day_start = day.to_time.change(hour: hour) %>
+    <% day_end   = day_start + 1.hour %>
+
+    <% hour_events = events.select do |event|
+             event.start_time < day_end && event.end_time > day_start
+           end %>
+
+    <div class="sc-col sc-day-hour">
+      <% hour_events.each do |event| %>
+      <div class="sc-event-block" style="<%= calendar_event_style(event, day_start, day_end) %>">
+        <%= event.title %>
+      </div>
+      <% end %>
+    </div>
+    <% end %>
+  </div>
+  <% end %>
+</div>

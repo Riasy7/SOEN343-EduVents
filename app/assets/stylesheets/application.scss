@@ -35,7 +35,7 @@ body {
 }
 
 .btn-secondary:hover {
-    background-color: rgba(0,0,0,0.1);
+    background-color: rgba(0, 0, 0, 0.1);
     color: black;
     border-color: #6c757d;
 }
@@ -80,4 +80,51 @@ body {
 
 .default-padding {
     margin: 32px;
+}
+
+.sc.weekly-hourly {
+    width: 100%;
+    border: 1px solid #ddd;
+
+    .sc-row {
+        display: flex;
+        flex-direction: row;
+        border-bottom: 1px solid #eee;
+    }
+
+    .sc-col {
+        flex: 1;
+        border-right: 1px solid #eee;
+        position: relative;
+    }
+
+    .sc-hour-label {
+        width: 50px;
+        text-align: center;
+        background: #f8f8f8;
+        border-right: 1px solid #ddd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .sc-day-header {
+        text-align: center;
+        background: #fafafa;
+        font-weight: bold;
+        padding: 8px;
+    }
+
+    .sc-day-hour {
+        height: 32px;
+    }
+
+    .sc-event-block {
+        background-color: #E8923C;
+        color: #fff;
+        border-radius: 4px;
+        padding: 2px 4px;
+        overflow: hidden;
+        font-size: 0.8rem;
+    }
 }
