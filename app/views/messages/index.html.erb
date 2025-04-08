@@ -1,9 +1,9 @@
 <h1>Chat Room for <%= @event.name %></h1>
-
+<% unless @messages.empty? %>
 <div class="border rounded p-3 overflow-auto" style="max-height: 500px; padding: 10px;">
   <% @messages.each do |message| %>
-    <%# Determine the color class based on the sender %>
-    <% color_class = if message.sender == current_user
+  <%# Determine the color class based on the sender %>
+  <% color_class = if message.sender == current_user
                        'alert alert-primary' # Current user's messages
                      elsif message.sender == @event.organizer
                        'alert alert-info' # Organizer's messages
@@ -11,9 +11,9 @@
                        'alert alert-secondary' # Other attendees' messages
                      end %>
 
-    <div class="<%= color_class %>">
-      <%# Display "You" for the current user's messages, otherwise show the sender's name and role %>
-      <p><strong>
+  <div class="<%= color_class %>">
+    <%# Display "You" for the current user's messages, otherwise show the sender's name and role %>
+    <p><strong>
         <%= if message.sender == current_user
               "You"
             elsif message.sender == @event.organizer
@@ -22,23 +22,26 @@
               "#{message.sender.get_full_name} (#{message.sender.attendee_type.capitalize})"
             end %>:
       </strong></p>
-      <p><%= message.content %></p>
-      <small><%= message.created_at.strftime("%B %d, %Y %I:%M %p") %></small>
-    </div>
+    <p><%= message.content %></p>
+    <small><%= message.created_at.strftime("%B %d, %Y %I:%M %p") %></small>
+  </div>
   <% end %>
 </div>
+<% else %>
+<p>No messages yet.</p>
+<% end %>
 
 <%= form_with model: Message.new, url: event_messages_path(@event), method: :post, class: "mt-3" do |f| %>
-  <div class="mb-3">
-    <%= f.text_area :content, placeholder: "Write your message...", class: "form-control" %>
-  </div>
-  <% if current_user.is_a?(AttendeeUser) %>
-    <%= f.hidden_field :receiver_id, value: @event.organizer.id, name: "message[receiver_id]" %>
-  <% elsif current_user.is_a?(OrganizerUser) %>
-    <div class="mb-3">
-      <%= f.label :receiver_id, "Reply to:" %>
-      <%= f.select :receiver_id, @event.attendees.map { |attendee| ["#{attendee.get_full_name} (#{attendee.attendee_type.capitalize})", attendee.id] }, {}, class: "form-select" %>
-    </div>
-  <% end %>
-  <%= f.submit "Send Message", class: "btn btn-primary" %>
+<div class="mb-3">
+  <%= f.text_area :content, placeholder: "Write your message...", class: "form-control" %>
+</div>
+<% if current_user.is_a?(AttendeeUser) %>
+<%= f.hidden_field :receiver_id, value: @event.organizer.id, name: "message[receiver_id]" %>
+<% elsif current_user.is_a?(OrganizerUser) %>
+<div class="mb-3">
+  <%= f.label :receiver_id, "Reply to:" %>
+  <%= f.select :receiver_id, @event.attendees.map { |attendee| ["#{attendee.get_full_name} (#{attendee.attendee_type.capitalize})", attendee.id] }, {}, class: "form-select" %>
+</div>
+<% end %>
+<%= f.submit "Send Message", class: "btn btn-primary" %>
 <% end %>
