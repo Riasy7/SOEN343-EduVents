@@ -1,130 +1,199 @@
 body {
-    font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat", sans-serif;
+  background-color: #f8f9fa;
 }
 
 .bg-body-tertiary {
-    background-color: white !important;
+  background-color: white !important;
 }
 
 .bg-orange {
-    background-color: #E8923C;
+  background-color: #e8923c;
 }
 
+/* Buttons */
 .btn-primary {
-    background-color: #E8923C;
-    color: #fff;
-    border-color: #E8923C;
+  background-color: #e8923c;
+  color: #fff;
+  border-color: #e8923c;
 }
 
 .btn-primary:hover {
-    background-color: #ab6b2c;
-    border-color: #ab6b2c;
+  background-color: #ab6b2c;
+  border-color: #ab6b2c;
 }
 
 .btn-primary:active:focus {
-    background-color: #cc7000;
-    border-color: #cc7000;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-    transform: scale(0.98);
+  background-color: #cc7000;
+  border-color: #cc7000;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  transform: scale(0.98);
 }
 
 .btn-secondary {
-    background-color: transparent;
-    color: black;
-    border-color: #6c757d;
+  background-color: transparent;
+  color: black;
+  border-color: #6c757d;
 }
 
 .btn-secondary:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-    color: black;
-    border-color: #6c757d;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: black;
+  border-color: #6c757d;
 }
 
+/* Cards */
 .cards {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 40px;
 }
 
 .card {
-    background-color: white;
-    color: #E8923C;
-    text-align: center;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-    width: 300px;
+  background-color: white;
+  color: #e8923c;
+  text-align: center;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  width: 300px;
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .card i {
-    color: #E8923C;
-    margin-bottom: 10px;
+  color: #e8923c;
+  margin-bottom: 10px;
 }
 
 .card h2 {
-    margin: 10px 0;
-    font-size: 1.5em;
+  margin: 10px 0;
+  font-size: 1.5em;
 }
 
 .card p {
-    font-size: 1.15em;
-    opacity: 0.8;
+  font-size: 1.15em;
+  opacity: 0.8;
 }
 
 .default-padding {
-    margin: 32px;
+  margin: 32px;
+}
+
+/* Inputs */
+input,
+select,
+textarea {
+  font-size: 1rem;
+}
+
+/* === Flatpickr === */
+.flatpickr-calendar {
+  font-family: "Montserrat", sans-serif;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+/* Month/Year header */
+.flatpickr-months {
+  background-color: #e8923c !important;
+  color: #fff;
+}
+
+/* Dropdown inputs inside month/year */
+.flatpickr-monthDropdown-months,
+.flatpickr-current-month input.cur-year {
+  background: transparent;
+  border: none;
+  color: #fff;
+}
+
+/* Weekday labels (Sun-Sat) */
+.flatpickr-weekdays {
+  background-color: #e8923c !important;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Selected day, hover, ranges */
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange,
+.flatpickr-day:hover {
+  background: #cc7000 !important;
+  border-color: #cc7000 !important;
+  color: #fff;
+}
+
+/* Out-of-month or disabled days */
+.flatpickr-day.flatpickr-disabled,
+.flatpickr-day.prevMonthDay,
+.flatpickr-day.nextMonthDay {
+  color: #ccc !important;
+  background: transparent !important;
+}
+
+/* Time picker */
+.flatpickr-time input {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 4px 6px;
+}
+
+.flatpickr-time input:focus {
+  border-color: #e8923c !important;
+  box-shadow: 0 0 0 1px #e8923c !important;
 }
 
 .sc.weekly-hourly {
-    width: 100%;
-    border: 1px solid #ddd;
+  width: 100%;
+  border: 1px solid #ddd;
 
-    .sc-row {
-        display: flex;
-        flex-direction: row;
-        border-bottom: 1px solid #eee;
-    }
+  .sc-row {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid #eee;
+  }
 
-    .sc-col {
-        flex: 1;
-        border-right: 1px solid #eee;
-        position: relative;
-    }
+  .sc-col {
+    flex: 1;
+    border-right: 1px solid #eee;
+    position: relative;
+  }
 
-    .sc-hour-label {
-        width: 50px;
-        text-align: center;
-        background: #f8f8f8;
-        border-right: 1px solid #ddd;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+  .sc-hour-label {
+    width: 50px;
+    text-align: center;
+    background: #f8f8f8;
+    border-right: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-    .sc-day-header {
-        text-align: center;
-        background: #fafafa;
-        font-weight: bold;
-        padding: 8px;
-    }
+  .sc-day-header {
+    text-align: center;
+    background: #fafafa;
+    font-weight: bold;
+    padding: 8px;
+  }
 
-    .sc-day-hour {
-        height: 32px;
-    }
+  .sc-day-hour {
+    height: 32px;
+  }
 
-    .sc-event-block {
-        background-color: #E8923C;
-        color: #fff;
-        border-radius: 4px;
-        padding: 2px 4px;
-        overflow: hidden;
-        font-size: 0.8rem;
-    }
+  .sc-event-block {
+    background-color: #e8923c;
+    color: #fff;
+    border-radius: 4px;
+    padding: 2px 4px;
+    overflow: hidden;
+    font-size: 0.8rem;
+  }
 }

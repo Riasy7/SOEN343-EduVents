@@ -6,21 +6,21 @@
 <p><strong>Category:</strong> <%= @event.category.presence || "None" %></p>
 
 <p><strong>Start Time:</strong>
-    <%= @event.start_time.present? ? @event.start_time.strftime("%B %d, %Y %I:%M %p") : "Not set" %>
+  <%= @event.start_time.present? ? @event.start_time.strftime("%B %d, %Y %I:%M %p") : "Not set" %>
 </p>
 
 <p><strong>End Time:</strong>
-    <%= @event.end_time.present? ? @event.end_time.strftime("%B %d, %Y %I:%M %p") : "Not set" %>
+  <%= @event.end_time.present? ? @event.end_time.strftime("%B %d, %Y %I:%M %p") : "Not set" %>
 </p>
 
 <h3>Resources</h3>
 <% if @event.resources.attached? %>
 <ul>
-    <% @event.resources.each do |resource| %>
-    <li>
-        <%= link_to resource.filename, url_for(resource) %>
-    </li>
-    <% end %>
+  <% @event.resources.each do |resource| %>
+  <li>
+    <%= link_to resource.filename, url_for(resource) %>
+  </li>
+  <% end %>
 </ul>
 <% else %>
 <p>No resources uploaded.</p>
@@ -46,6 +46,12 @@
   <%= link_to "Edit Event", edit_event_path(@event), class: "btn btn-primary" %>
   <%= link_to "Delete", event_path(@event), method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-danger" %>
 <% end %>
-<% if current_user.is_a?(OrganizerUser)%>
-<%= link_to "Back to Events", organizer_dashboard_path, class: "btn btn-secondary" %>
-<%end%>
+
+
+<% if current_user.is_a?(AdminUser) %>
+<%= link_to "Back to Events", events_path, class: "btn btn-secondary" %>
+<% elsif current_user.is_a?(OrganizerUser) %>
+<%= link_to "Back to Dashboard", organizer_dashboard_path, class: "btn btn-secondary" %>
+<% elsif current_user.is_a?(AttendeeUser) %>
+<%= link_to "Back to Events", attendee_dashboard_events_path, class: "btn btn-secondary" %>
+<% end %>
