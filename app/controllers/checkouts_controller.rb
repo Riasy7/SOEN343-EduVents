@@ -11,24 +11,24 @@ class CheckoutsController < ApplicationController
     end
 
     session = Stripe::Checkout::Session.create(
-      payment_method_types: ['card'],
+      payment_method_types: [ "card" ],
       customer_email: current_user.email,
       metadata: {
         attendee_id: attendee.id,
         event_id: event.id,
         role: params[:role]
       },
-      line_items: [{
+      line_items: [ {
         price_data: {
-          currency: 'usd',
+          currency: "usd",
           product_data: {
-            name: event.name,
+            name: event.name
           },
-          unit_amount: event.price_cents,
+          unit_amount: event.price_cents
         },
-        quantity: 1,
-      }],
-      mode: 'payment',
+        quantity: 1
+      } ],
+      mode: "payment",
       success_url: success_checkouts_url + "?session_id={CHECKOUT_SESSION_ID}",
       cancel_url: cancel_checkouts_url
     )
@@ -39,7 +39,7 @@ class CheckoutsController < ApplicationController
   def success
     session = Stripe::Checkout::Session.retrieve(params[:session_id])
     payment_intent = Stripe::PaymentIntent.retrieve(session.payment_intent)
-    
+
     attendee_id = session.metadata.attendee_id
     event_id = session.metadata.event_id
     role = session.metadata.role
@@ -57,7 +57,7 @@ class CheckoutsController < ApplicationController
       event: event,
       amount: payment_intent.amount / 100.0,
       currency: payment_intent.currency,
-      status: 'paid',
+      status: "paid",
       stripe_payment_intent_id: payment_intent.id
     )
 

@@ -28,7 +28,13 @@ Rails.application.routes.draw do
     resources :messages, only: [:index, :create]
   end
 
-  resources :venues
+  resources :venues do
+    member do
+      get "edit_schedule"
+      patch "add_schedule"
+      patch "reset_schedule"
+    end
+  end
 
   # stripe checkout routes
   resources :checkouts, only: [ :create ] do

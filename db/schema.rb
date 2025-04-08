@@ -103,15 +103,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_07_182551) do
     t.index ["user_id"], name: "index_notification_preferences_on_user_id"
   end
 
-  create_table "notification_preferences", force: :cascade do |t|
-    t.bigint "user_id"
-    t.boolean "email_enabled"
-    t.boolean "sms_enabled"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_notification_preferences_on_user_id"
-  end
-
   create_table "organizations", force: :cascade do |t|
     t.string "name"
     t.string "website"
@@ -160,6 +151,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_07_182551) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "organization_id"
+    t.json "schedule"
     t.index ["organization_id"], name: "index_venues_on_organization_id"
   end
 
@@ -173,7 +165,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_07_182551) do
   add_foreign_key "messages", "events"
   add_foreign_key "messages", "users", column: "receiver_id"
   add_foreign_key "messages", "users", column: "sender_id"
-  add_foreign_key "notification_preferences", "users"
   add_foreign_key "notification_preferences", "users"
   add_foreign_key "payments", "events"
   add_foreign_key "payments", "users"
