@@ -16,4 +16,19 @@ module CalendarsHelper
 
     "position: absolute; top: #{offset_percent}%; height: #{height_percent}%; left: 5%; right: 5%;"
   end
+
+  def calendar_event_full_day_style(event, day_start)
+    total_minutes = 24 * 60.0
+
+    event_start = event.start_time.to_time
+    event_end   = event.end_time.to_time
+
+    offset_minutes = ((event_start - day_start) / 60.0).clamp(0, total_minutes)
+    duration_minutes = ((event_end - event_start) / 60.0).clamp(0, total_minutes - offset_minutes)
+
+    offset_percent = (offset_minutes / total_minutes) * 100
+    height_percent = (duration_minutes / total_minutes) * 100
+
+    "position: absolute; top: #{offset_percent}%; height: #{height_percent}%; left: 5%; right: 5%;"
+  end
 end

@@ -3,6 +3,7 @@ class AttendeeDashboardController < ApplicationController
   before_action :validate_attendee!
 
   def index
+    @events = current_user.events
   end
 
   def browse_events
