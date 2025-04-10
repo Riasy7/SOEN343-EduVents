@@ -14,6 +14,10 @@ class AttendeeDashboardController < ApplicationController
     @event_registrations = current_user.event_registrations
   end
 
+  def past_events
+    @past_events = current_user.events.where("end_time < ?", Time.current)
+  end  
+
   private
 
   def validate_attendee!
