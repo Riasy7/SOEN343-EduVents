@@ -5,6 +5,9 @@
 
     <%= simple_form_for @event, html: { multipart: true, class: "form-wrapper" } do |f| %>
 
+    <!-- Display error notifications -->
+    <%= f.error_notification %>
+
     <div class="mb-4">
       <%= f.input :name, label: "Event Name", input_html: { class: "form-control rounded-3 px-4 py-3 fs-5" } %>
     </div>
@@ -29,14 +32,15 @@
       <%= f.input :venue_id, collection: Venue.all.pluck(:name, :id), prompt: "Select a Venue", label: "Venue", input_html: { class: "form-select rounded-3 px-4 py-3 fs-5" } %>
     </div>
 
+    <div id="calendar" class="mt-5">
+      <%= f.label "Veune availability", class: "form-label fs-5 mb-2" %>
+      <%= week_calendar(events: @events, start_date: Date.today, partial: "calendars/week_hourly") do %>
+      <% end %><br />
+    </div>
+
     <div class="mb-4">
       <%= f.label :resources, "Upload Resources (PDFs, Images, etc.)", class: "form-label fs-5 mb-2" %>
       <%= f.file_field :resources, multiple: true, class: "form-control rounded-3 fs-5" %>
-    </div>
-
-    <div id="calendar" class="mt-5">
-      <%= week_calendar(events: @events, start_date: Date.today, partial: "calendars/week_hourly") do %>
-      <% end %>
     </div>
 
     <div class="d-flex justify-content-between align-items-center mt-4">
@@ -52,3 +56,30 @@
 
   </div>
 </div>
+
+<script>
+  document.addEventListener("turbo:load", function() {
+    var venueSelect = document.getElementById("event_venue_id");
+    if (!venueSelect) return;
+
+    venueSelect.addEventListener("change", function() {
+      var venueId = this.value;
+      if (venueId) {
+        fetch("/venues/" + venueId + "/schedule", {
+            headers: {
+              'Accept': 'text/javascript'
+            }
+          })
+          .then(function(response) {
+            return response.text();
+          })
+          .then(function(data) {
+            document.getElementById("calendar").innerHTML = data;
+          })
+          .catch(function(error) {
+            console.error("Error fetching schedule:", error);
+          });
+      }
+    });
+  });
+</script>

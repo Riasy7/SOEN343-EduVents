@@ -100,6 +100,16 @@ class VenuesController < ApplicationController
     end
   end
 
+  def schedule
+    @events = (@venue.schedule || []).map do |s|
+      OpenStruct.new(
+        start_time: DateTime.parse(s["start_time"]),
+        end_time: DateTime.parse(s["end_time"])
+      )
+    end
+    render partial: "calendars/week_hourly", locals: { events: @events, start_date: Date.today }
+  end
+
   private
 
   # this is to make sure only the user reponsible for a venue can modify the venue

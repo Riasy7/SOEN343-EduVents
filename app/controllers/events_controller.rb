@@ -1,3 +1,5 @@
+require "ostruct"
+
 class EventsController < ApplicationController
   before_action :authenticate_user!
   before_action :authorize_event_manager!, only: [ :new, :create, :edit, :update, :destroy ]
@@ -47,6 +49,16 @@ class EventsController < ApplicationController
     if @event.update(event_params)
       redirect_to @event, notice: "Event was successfully updated."
     else
+      @events = if @event.venue && @event.venue.schedule.present?
+                @event.venue.schedule.map do |s|
+                  OpenStruct.new(
+                    start_time: DateTime.parse(s["start_time"]),
+                    end_time: DateTime.parse(s["end_time"])
+                  )
+                end
+              else
+                []
+              end
       render :edit
     end
   end
@@ -108,21 +120,21 @@ class EventsController < ApplicationController
     unless current_user.is_a?(AttendeeUser)
       redirect_to @event, alert: "Only attendees can rate events." and return
     end
-  
+
     unless @event.end_time < Time.current
       redirect_to @event, alert: "You can only rate events that have already happened." and return
     end
-  
+
     rating = @event.ratings.find_or_initialize_by(attendee: current_user)
     rating.rating = params[:rating]
-  
+
     if rating.save
       redirect_to @event, notice: "Thank you for rating this event!"
     else
       redirect_to @event, alert: "Unable to save your rating. #{rating.errors.full_messages.to_sentence}"
     end
   end
-  
+
 
   private
 

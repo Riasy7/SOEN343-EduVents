@@ -28,18 +28,19 @@ Rails.application.routes.draw do
       post :rate, to: "events#rate"
     end
 
-    resources :messages, only: [:index, :create]
+    resources :messages, only: [ :index, :create ]
   end
 
   resources :venues do
     member do
+      get "schedule"
       get "edit_schedule"
       patch "add_schedule"
       patch "reset_schedule"
     end
   end
 
-  resources :checkouts, only: [:create] do
+  resources :checkouts, only: [ :create ] do
     collection do
       get :success
       get :cancel
@@ -48,6 +49,6 @@ Rails.application.routes.draw do
 
   # payment history routes
   resources :users do
-    resources :payments, only: [:index]
+    resources :payments, only: [ :index ]
   end
 end
