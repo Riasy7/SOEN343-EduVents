@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_08_154237) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_10_173808) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -131,6 +131,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_08_154237) do
     t.integer "rating", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["attendee_id", "event_id"], name: "index_ratings_on_attendee_id_and_event_id", unique: true
     t.index ["attendee_id"], name: "index_ratings_on_attendee_id"
     t.index ["event_id", "attendee_id"], name: "index_ratings_on_event_id_and_attendee_id", unique: true
     t.index ["event_id"], name: "index_ratings_on_event_id"

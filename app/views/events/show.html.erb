@@ -65,5 +65,5 @@
 <% elsif current_user.is_a?(OrganizerUser) %>
 <%= link_to "Back to Dashboard", organizer_dashboard_path, class: "btn btn-secondary" %>
 <% elsif current_user.is_a?(AttendeeUser) %>
-<%= link_to "Back to Events", attendee_dashboard_events_path, class: "btn btn-secondary" %>
+<%= link_to "Back to Events", upcoming_events_path, class: "btn btn-secondary" %>
 <% end %>

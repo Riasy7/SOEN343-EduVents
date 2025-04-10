@@ -13,9 +13,9 @@ class EventRegistrationController < ApplicationController
     @event_registration = EventRegistration.find(params[:id])
 
     if @event_registration.destroy
-      redirect_to attendee_dashboard_events_path, notice: "Event registration was successfully canceled."
+      redirect_to upcoming_events_path, notice: "Event registration was successfully canceled."
     else
-      redirect_to attendee_dashboard_events_path, alert: "Error: Unable to cancel event registration."
+      redirect_to upcoming_events_path, alert: "Error: Unable to cancel event registration."
     end
   end
 
@@ -24,7 +24,7 @@ class EventRegistrationController < ApplicationController
     event = Event.find(event_id)
 
     if attendee.registered_for_event?(event_id)
-      redirect_to attendee_dashboard_events_path, alert: "You are already registered for this event." and return
+      redirect_to upcoming_events_path, alert: "You are already registered for this event." and return
     end
 
     # create new event registration immediatly if the event is free
