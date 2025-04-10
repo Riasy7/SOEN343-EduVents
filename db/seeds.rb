@@ -3,6 +3,7 @@ Rails.application.eager_load!
 # Delete all objects to reset the db
 NotificationPreference.delete_all
 Payment.delete_all
+Rating.delete_all
 EventRegistration.delete_all
 Event.delete_all
 AdminUser.delete_all
@@ -56,6 +57,28 @@ events.each do |event_data|
 
   EventRegistration.create!(event_id: event.id, attendee_id: listener.id, role: "listener") if rand(2) == 1
   EventRegistration.create!(event_id: event.id, attendee_id: speaker.id, role: "speaker") if rand(2) == 1
+
+  # Add random payments
+  rand(100..1000).times do
+    Payment.create!(
+      user: [ listener, speaker ].sample,
+      event: event,
+      amount: rand(10..100),
+      status: "paid"
+    )
+  end
+
+  # Add random ratings
+  rand(50..200).times do
+    attendee = [ listener, speaker ].sample
+    Rating.create!(
+      event: event,
+      attendee: attendee,
+      rating: rand(1..5)
+    ) rescue nil # Avoid duplicate ratings
+  end
 end
 
-attendee_notification_preference = NotificationPreference.create!(sms_enabled: true, email_enabled: true, user_id: listener.id)
+# Add notification preferences for attendees
+NotificationPreference.create!(sms_enabled: true, email_enabled: true, user_id: listener.id)
+NotificationPreference.create!(sms_enabled: true, email_enabled: true, user_id: speaker.id)

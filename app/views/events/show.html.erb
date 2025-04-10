@@ -26,25 +26,37 @@
 <p>No resources uploaded.</p>
 <% end %>
 
+<h3>Average Rating</h3>
+<p><strong>Rating:</strong> <%= @event.average_rating %> / 5</p>
+
+
 <% if current_user.is_a?(AttendeeUser) %>
-  <% if current_user.registered_for_event?(@event.id) %>
-    <%= link_to "View Registration Details", event_registration_path(current_user.get_registration_for_event(@event.id)), class: "btn btn-success" %>
-    <%= link_to "Chat Room", event_messages_path(@event), class: "btn btn-secondary" %>
-  <% else %>
-    <%= link_to "Register as Listener", register_as_listener_event_path(@event), method: :post, class: "btn btn-success" %>
-    <% if current_user.attendee_type == "speaker" %>
-      <%= link_to "Register as Speaker", register_as_speaker_event_path(@event), method: :post, class: "btn btn-success" %>
-    <% end %>
-  <% end %>
+<% if current_user.registered_for_event?(@event.id) %>
+<%= link_to "View Registration Details", event_registration_path(current_user.get_registration_for_event(@event.id)), class: "btn btn-success" %>
+<%= link_to "Chat Room", event_messages_path(@event), class: "btn btn-secondary" %>
+<h3>Rate this Event</h3>
+<%= form_with url: rate_event_path(@event), method: :post, local: true do |f| %>
+<div class="rating-options">
+  <%= f.label :rating, "Select a rating (1 to 5):" %>
+  <%= f.select :rating, (1..5).to_a, {}, class: "form-control" %>
+</div>
+<%= f.submit "Submit Rating", class: "btn btn-primary mt-2" %>
+<% end %>
+<% else %>
+<%= link_to "Register as Listener", register_as_listener_event_path(@event), method: :post, class: "btn btn-success" %>
+<% if current_user.attendee_type == "speaker" %>
+<%= link_to "Register as Speaker", register_as_speaker_event_path(@event), method: :post, class: "btn btn-success" %>
+<% end %>
+<% end %>
 <% end %>
 
 <% if current_user.is_a?(OrganizerUser) && @event.organizer == current_user %>
-  <%= link_to "Chat Room", event_messages_path(@event), class: "btn btn-secondary" %>
+<%= link_to "Chat Room", event_messages_path(@event), class: "btn btn-secondary" %>
 <% end %>
 
 <% if current_user.is_a?(OrganizerUser) || current_user.is_a?(ExecutiveUser) || current_user.is_a?(AdminUser) %>
-  <%= link_to "Edit Event", edit_event_path(@event), class: "btn btn-primary" %>
-  <%= link_to "Delete", event_path(@event), method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-danger" %>
+<%= link_to "Edit Event", edit_event_path(@event), class: "btn btn-primary" %>
+<%= link_to "Delete", event_path(@event), method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-danger" %>
 <% end %>
 
 
@@ -53,5 +65,5 @@
 <% elsif current_user.is_a?(OrganizerUser) %>
 <%= link_to "Back to Dashboard", organizer_dashboard_path, class: "btn btn-secondary" %>
 <% elsif current_user.is_a?(AttendeeUser) %>
-<%= link_to "Back to Events", attendee_dashboard_events_path, class: "btn btn-secondary" %>
+<%= link_to "Back to Events", upcoming_events_path, class: "btn btn-secondary" %>
 <% end %>

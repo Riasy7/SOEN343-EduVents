@@ -1,6 +1,10 @@
 <h1>Welcome <%= current_user.first_name %>!</h1>
 <p>Here are your upcoming events for the week.</p>
-<div id="calendar" class="mt-5">
-  <%= week_calendar(events: @events, start_date: Date.today, partial: "calendars/week_full_day") do %>
-  <% end %>
+<div class="row">
+  <div class="col-lg-8 offset-lg-2">
+    <div id="calendar" class="mt-5">
+      <%= week_calendar(events: @events, start_date: Date.today, partial: "calendars/week_full_day") do %>
+      <% end %>
+    </div>
+  </div>
 </div>

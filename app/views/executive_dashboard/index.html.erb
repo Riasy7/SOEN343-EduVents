@@ -1,2 +1,19 @@
-<h1>ExecutiveDashboard#index</h1>
-<p>Find me in app/views/executive_dashboard/index.html.erb</p>
+<h1>Executive Dashboard</h1>
+
+<div class="mb-4">
+  <h3>Revenue Comparison for All Events</h3>
+  <% if @revenue_data.present? %>
+    <%= column_chart @revenue_data, height: "400px", colors: ["#4285F4"], xtitle: "Events", ytitle: "Revenue (USD)" %>
+  <% else %>
+    <p>No revenue data available for any events.</p>
+  <% end %>
+</div>
+
+<div class="mb-4">
+  <h3>Average Ratings for All Events</h3>
+  <% if @ratings_data.present? %>
+    <%= column_chart @ratings_data, height: "400px", colors: ["#FFD700"], xtitle: "Events", ytitle: "Average Rating (Out of 5)" %>
+  <% else %>
+    <p>No ratings data available for any events.</p>
+  <% end %>
+</div>

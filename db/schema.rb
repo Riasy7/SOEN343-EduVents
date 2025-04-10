@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_07_182551) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_10_173808) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -125,6 +125,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_07_182551) do
     t.index ["user_id"], name: "index_payments_on_user_id"
   end
 
+  create_table "ratings", force: :cascade do |t|
+    t.bigint "event_id", null: false
+    t.bigint "attendee_id", null: false
+    t.integer "rating", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["attendee_id", "event_id"], name: "index_ratings_on_attendee_id_and_event_id", unique: true
+    t.index ["attendee_id"], name: "index_ratings_on_attendee_id"
+    t.index ["event_id", "attendee_id"], name: "index_ratings_on_event_id_and_attendee_id", unique: true
+    t.index ["event_id"], name: "index_ratings_on_event_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -168,6 +180,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_07_182551) do
   add_foreign_key "notification_preferences", "users"
   add_foreign_key "payments", "events"
   add_foreign_key "payments", "users"
+  add_foreign_key "ratings", "events"
+  add_foreign_key "ratings", "users", column: "attendee_id"
   add_foreign_key "users", "organizations"
   add_foreign_key "venues", "organizations"
 end

@@ -7,7 +7,7 @@
   <div class="row mb-3 align-items-center">
     <div class="col-auto"></div>
     <% week_days.each do |day| %>
-    <div class="col text-center">
+    <div class="col text-center <%= 'bg-orange rounded' if day.to_date == Date.current %>">
       <strong><%= day.strftime("%A, %b %d") %></strong>
     </div>
     <% end %>

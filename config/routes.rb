@@ -12,31 +12,34 @@ Rails.application.routes.draw do
 
   get "attendee_dashboard", to: "attendee_dashboard#index"
   get "attendee_dashboard/browse", to: "attendee_dashboard#browse_events"
-  get "attendee_dashboard/events", to: "attendee_dashboard#event_registrations"
+  get "attendee_dashboard/events", to: "attendee_dashboard#event_registrations", as: "upcoming_events"
+  get "attendee_dashboard/past_events", to: "attendee_dashboard#past_events", as: "past_events"
 
   resources :event_registration
+
   resources :events do
     collection do
       get :search
     end
-  
+
     member do
       post :register_as_listener, to: "event_registration#register_as_listener"
       post :register_as_speaker, to: "event_registration#register_as_speaker"
+      post :rate, to: "events#rate"
     end
-    # nested inside of events
-    resources :messages, only: [:index, :create]
+
+    resources :messages, only: [ :index, :create ]
   end
 
   resources :venues do
     member do
+      get "schedule"
       get "edit_schedule"
       patch "add_schedule"
       patch "reset_schedule"
     end
   end
 
-  # stripe checkout routes
   resources :checkouts, only: [ :create ] do
     collection do
       get :success

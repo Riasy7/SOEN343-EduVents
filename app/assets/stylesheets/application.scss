@@ -1,6 +1,5 @@
 body {
   font-family: "Montserrat", sans-serif;
-  background-color: #f8f9fa;
 }
 
 .bg-body-tertiary {
@@ -11,7 +10,6 @@ body {
   background-color: #e8923c;
 }
 
-/* Buttons */
 .btn-primary {
   background-color: #e8923c;
   color: #fff;
@@ -42,7 +40,6 @@ body {
   border-color: #6c757d;
 }
 
-/* Cards */
 .cards {
   display: flex;
   justify-content: center;
@@ -83,6 +80,16 @@ body {
 
 .default-padding {
   margin: 32px;
+}
+
+.rating-options {
+  margin-top: 10px;
+}
+
+.rating-options select {
+  width: 100px;
+  padding: 5px;
+  font-size: 1rem;
 }
 
 /* Inputs */
@@ -196,4 +203,8 @@ textarea {
     overflow: hidden;
     font-size: 0.8rem;
   }
+}
+
+.error {
+  color: red;
 }
