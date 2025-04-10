@@ -34,6 +34,13 @@ class EventsController < ApplicationController
   end
 
   def edit
+    @venue = @event.venue
+    @events = (@venue.schedule || []).map do |s|
+      OpenStruct.new(
+        start_time: DateTime.parse(s["start_time"]),
+        end_time: DateTime.parse(s["end_time"]),
+      )
+    end
   end
 
   def update
